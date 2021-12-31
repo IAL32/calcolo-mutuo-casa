@@ -1,5 +1,5 @@
 import { PERIOD_TYPE } from './enums';
-import type { Mortgage } from './types';
+import type { Mortgage, MortgagePlan } from './types';
 
 /**
  * From: https://superuser.com/a/871411/1473069
@@ -71,4 +71,21 @@ export const calculate_interest_paid_amount = (
 	const pmt = calculate_mortgage(mortgage_data);
 
 	return ipmt_(pmt, mortgage_data.total, mortgage_data.taeg / 100 / 12, interestPeriod);
+};
+
+export const get_mortgage_plan = (mortgage_data: Mortgage): MortgagePlan[] => {
+	const numberOfPeriods: number = mortgage_data.period === PERIOD_TYPE.MONTHS ? 1 : 12;
+
+	const mortgage: number = calculate_mortgage(mortgage_data);
+	let remaining_principal = mortgage_data.total;
+
+	return Array.from(Array(mortgage_data.time * numberOfPeriods)).map((_, i) => {
+		const principal_paid = calculate_principal_paid_amount(mortgage_data, i + 1);
+		return {
+			principal_paid,
+			interest_paid: calculate_interest_paid_amount(mortgage_data, i + 1),
+			mortgage_paid: mortgage,
+			remaining_principal: (remaining_principal -= principal_paid)
+		};
+	});
 };

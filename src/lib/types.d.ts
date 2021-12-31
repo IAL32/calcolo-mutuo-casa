@@ -26,3 +26,10 @@ export interface Mortgage {
 	time: number;
 	taeg: number;
 }
+
+export interface MortgagePlan {
+	principal_paid: number;
+	interest_paid: number;
+	mortgage_paid: number;
+	remaining_principal: number;
+}

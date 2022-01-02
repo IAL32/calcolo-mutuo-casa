@@ -45,3 +45,12 @@ export interface HouseSaleCosts {
 
 	total: number;
 }
+
+export interface MortgageCosts {
+	openingMortgage: number; // istruttoria pratica di mutuo
+	houseExamination: number; // perizia dell'immobile
+	alternateTax: number; // imposta sostitutiva
+	notary: number; // onorari notarili per atto di mutuo
+
+	total: number;
+}

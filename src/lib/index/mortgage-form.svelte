@@ -17,6 +17,7 @@
 			invalid={!mortgageTotalIsValid}
 			bind:value={$mortgage.total}
 			step={1000}
+			max={$house.totalPrice}
 			placeholder="Inserisci il valore del mutuo da richiedere" />
 	</Col>
 </FormGroup>

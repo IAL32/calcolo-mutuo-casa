@@ -1,5 +1,5 @@
 import { PERIOD_TYPE, PURPOSE_TYPE, SELLER_TYPE } from './enums';
-import type { House, HouseSaleCosts, Mortgage, MortgagePlan } from './types';
+import type { House, HouseSaleCosts, Mortgage, MortgageCosts, MortgagePlan } from './types';
 
 const REALTOR_FLAT_RATE_LIMIT = 1e6;
 const REALTOR_FLAT_RATE = 6000;
@@ -14,7 +14,15 @@ const MORTGAGE_TAX_COMPANY = 200;
 const LAND_REGISTRY_TAX_PRIVATE = 50;
 const LAND_REGISTRY_TAX_COMPANY = 200;
 
-const NOTARY_COST = 1800;
+const HOUSE_SALE_NOTARY_COST = 1800;
+
+const OPENING_MORTGAGE_COST = 250;
+const HOUSE_EXAMINATION_COST = 250;
+
+const ALTERNATE_TAX_FIRST_HOUSE = 0.0025;
+const ALTERNATE_TAX_SECOND_HOUSE = 0.02;
+
+const MORTGAGE_NOTARY_COST = 2400;
 
 /**
  * From: https://superuser.com/a/871411/1473069
@@ -125,7 +133,6 @@ export const calculate_registry_cost = (
 		return REGISTRY_TAX_COMPANY;
 	}
 
-	console.log(landRegistryValue);
 	if (purpose == PURPOSE_TYPE.FIRST_HOUSE) {
 		return landRegistryValue * 0.02;
 	}
@@ -168,7 +175,7 @@ export const calculate_house_sale_costs = (house: House): HouseSaleCosts => {
 		mortgageTax: calculate_mortgage_tax(house.seller),
 		landRegistryTax: calculate_land_registry_tax(house.seller),
 		vat: calculate_house_sale_vat(house.totalPrice, house.purpose, house.seller),
-		notary: NOTARY_COST,
+		notary: HOUSE_SALE_NOTARY_COST,
 
 		total: 0
 	};
@@ -182,4 +189,35 @@ export const calculate_house_sale_costs = (house: House): HouseSaleCosts => {
 		houseSaleCosts.landRegistryTax;
 
 	return houseSaleCosts;
+};
+
+export const calculate_mortgage_alternate_tax = (
+	houseValue: number,
+	purpose: PURPOSE_TYPE
+): number => {
+	return purpose === PURPOSE_TYPE.FIRST_HOUSE
+		? houseValue * ALTERNATE_TAX_FIRST_HOUSE
+		: houseValue * ALTERNATE_TAX_SECOND_HOUSE;
+};
+
+export const calculate_mortgage_costs = (
+	houseValue: number,
+	purpose: PURPOSE_TYPE
+): MortgageCosts => {
+	const mortgageCosts: MortgageCosts = {
+		openingMortgage: OPENING_MORTGAGE_COST,
+		houseExamination: HOUSE_EXAMINATION_COST,
+		alternateTax: calculate_mortgage_alternate_tax(houseValue, purpose),
+		notary: MORTGAGE_NOTARY_COST,
+
+		total: 0
+	};
+
+	mortgageCosts.total =
+		mortgageCosts.openingMortgage +
+		mortgageCosts.houseExamination +
+		mortgageCosts.alternateTax +
+		mortgageCosts.notary;
+
+	return mortgageCosts;
 };

@@ -7,7 +7,7 @@
 	$: saleCosts = calculate_house_sale_costs($house);
 </script>
 
-<Table>
+<Table responsive>
 	<tbody>
 		<tr>
 			<td>Onorario Agenzia Immobiliare (<abbr title="Stima">*</abbr>)</td>
@@ -41,3 +41,9 @@
 		</tr>
 	</tfoot>
 </Table>
+
+<style>
+  tr td:nth-child(2) {
+    text-align: right;
+  }
+</style>

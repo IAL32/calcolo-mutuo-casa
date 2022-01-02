@@ -6,6 +6,7 @@
 	import MortgagePlanTable from '$lib/index/mortgage-plan-table.svelte';
 	import UserForm from '$lib/index/user-form.svelte';
 	import SaleCostsTable from '$lib/index/sale-costs-table.svelte';
+	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
 </script>
 
 <svelte:head>
@@ -36,9 +37,18 @@
 	</Col>
 </Row>
 
-<h2>Costi legati alla compravendita</h2>
+<Row>
+	<Col>
+		<h2>Costi legati alla compravendita</h2>
 
-<SaleCostsTable />
+		<SaleCostsTable />
+	</Col>
+	<Col>
+		<h2>Costi legati al mutuo</h2>
+
+		<MortgageCostsTable />
+	</Col>
+</Row>
 
 <h2>Piano di ammortamento</h2>
 

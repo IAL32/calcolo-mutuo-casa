@@ -5,11 +5,15 @@
 	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
 
 	$: mortgageTotalIsValid = $mortgage.total >= 2 && $house.totalPrice >= $mortgage.total;
-	let mortgagePercent: number = $mortgage.total / $house.totalPrice;
+	let mortgagePercent: number = calculateMortgagePercent($mortgage.total, $house.totalPrice);
+
+	function calculateMortgagePercent(mortgageTotal, houseTotalPrice) {
+		return parseFloat(((mortgageTotal / houseTotalPrice) * 100).toFixed(2));
+	}
 
 	function handleMortgageTotalChange(e) {
 		$mortgage.total = e.target.value;
-		mortgagePercent = parseFloat((($mortgage.total / $house.totalPrice) * 100).toFixed(2));
+		mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
 	}
 
 	function handleMortgagePercentChange(e) {

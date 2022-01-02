@@ -1,7 +1,15 @@
 import { PERIOD_TYPE, PURPOSE_TYPE, SELLER_TYPE } from './enums';
-import type { House, HouseSaleCosts, Mortgage, MortgageCosts, MortgagePlan } from './types';
+import { activeLaws } from './stores/active-laws';
+import type {
+	ActiveLaws,
+	House,
+	HouseSaleCosts,
+	Mortgage,
+	MortgageCosts,
+	MortgagePlan
+} from './types';
 
-const REALTOR_FLAT_RATE_LIMIT = 1e6;
+const REALTOR_FLAT_RATE_LIMIT = 1.5e5; // 150.000
 const REALTOR_FLAT_RATE = 6000;
 const REALTOR_RATE = 0.03; // 3%
 
@@ -122,11 +130,16 @@ export const calculate_realtor_cost = (houseValue: number): number => {
 };
 
 export const calculate_registry_cost = (
+	activeLaws: ActiveLaws,
 	houseValue: number,
 	houseYield: number,
 	purpose: PURPOSE_TYPE,
 	seller: SELLER_TYPE
 ): number => {
+	if (activeLaws.dl_73_2021) {
+		return 0;
+	}
+
 	const landRegistryValue: number = calculate_house_land_registry_value(houseYield);
 
 	if (seller === SELLER_TYPE.COMPANY) {
@@ -144,11 +157,22 @@ export const calculate_house_land_registry_value = (houseYield: number): number 
 	return houseYield * HOUSE_YIELD_CONSTANT;
 };
 
-export const calculate_mortgage_tax = (seller: SELLER_TYPE): number => {
+export const calculate_mortgage_tax = (activeLaws: ActiveLaws, seller: SELLER_TYPE): number => {
+	if (activeLaws.dl_73_2021) {
+		return 0;
+	}
+
 	return seller === SELLER_TYPE.PRIVATE ? MORTGAGE_TAX_PRIVATE : MORTGAGE_TAX_COMPANY;
 };
 
-export const calculate_land_registry_tax = (seller: SELLER_TYPE): number => {
+export const calculate_land_registry_tax = (
+	activeLaws: ActiveLaws,
+	seller: SELLER_TYPE
+): number => {
+	if (activeLaws.dl_73_2021) {
+		return 0;
+	}
+
 	return seller === SELLER_TYPE.PRIVATE ? LAND_REGISTRY_TAX_PRIVATE : LAND_REGISTRY_TAX_COMPANY;
 };
 
@@ -168,12 +192,35 @@ export const calculate_house_sale_vat = (
 	return houseValue * 0.1;
 };
 
-export const calculate_house_sale_costs = (house: House): HouseSaleCosts => {
+export const calculate_mortgage_alternate_tax = (
+	activeLaws: ActiveLaws,
+	houseValue: number,
+	purpose: PURPOSE_TYPE
+): number => {
+	if (activeLaws.dl_73_2021) {
+		return 0;
+	}
+
+	return purpose === PURPOSE_TYPE.FIRST_HOUSE
+		? houseValue * ALTERNATE_TAX_FIRST_HOUSE
+		: houseValue * ALTERNATE_TAX_SECOND_HOUSE;
+};
+
+export const calculate_house_sale_costs = (
+	activeLaws: ActiveLaws,
+	house: House
+): HouseSaleCosts => {
 	const houseSaleCosts: HouseSaleCosts = {
 		realtor: calculate_realtor_cost(house.totalPrice),
-		registry: calculate_registry_cost(house.totalPrice, house.yield, house.purpose, house.seller),
-		mortgageTax: calculate_mortgage_tax(house.seller),
-		landRegistryTax: calculate_land_registry_tax(house.seller),
+		registry: calculate_registry_cost(
+			activeLaws,
+			house.totalPrice,
+			house.yield,
+			house.purpose,
+			house.seller
+		),
+		mortgageTax: calculate_mortgage_tax(activeLaws, house.seller),
+		landRegistryTax: calculate_land_registry_tax(activeLaws, house.seller),
 		vat: calculate_house_sale_vat(house.totalPrice, house.purpose, house.seller),
 		notary: HOUSE_SALE_NOTARY_COST,
 
@@ -191,23 +238,15 @@ export const calculate_house_sale_costs = (house: House): HouseSaleCosts => {
 	return houseSaleCosts;
 };
 
-export const calculate_mortgage_alternate_tax = (
-	houseValue: number,
-	purpose: PURPOSE_TYPE
-): number => {
-	return purpose === PURPOSE_TYPE.FIRST_HOUSE
-		? houseValue * ALTERNATE_TAX_FIRST_HOUSE
-		: houseValue * ALTERNATE_TAX_SECOND_HOUSE;
-};
-
 export const calculate_mortgage_costs = (
+	activeLaws: ActiveLaws,
 	houseValue: number,
 	purpose: PURPOSE_TYPE
 ): MortgageCosts => {
 	const mortgageCosts: MortgageCosts = {
 		openingMortgage: OPENING_MORTGAGE_COST,
 		houseExamination: HOUSE_EXAMINATION_COST,
-		alternateTax: calculate_mortgage_alternate_tax(houseValue, purpose),
+		alternateTax: calculate_mortgage_alternate_tax(activeLaws, houseValue, purpose),
 		notary: MORTGAGE_NOTARY_COST,
 
 		total: 0

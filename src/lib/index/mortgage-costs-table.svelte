@@ -3,8 +3,9 @@
 	import { Table } from 'sveltestrap';
 	import { house } from '$lib/stores/house';
 	import { toPrettyEuro } from '$lib/helpers';
+	import { activeLaws } from '$lib/stores/active-laws';
 
-	$: mortgageCosts = calculate_mortgage_costs($house.totalPrice, $house.purpose);
+	$: mortgageCosts = calculate_mortgage_costs($activeLaws, $house.totalPrice, $house.purpose);
 </script>
 
 <Table responsive>

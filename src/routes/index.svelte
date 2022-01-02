@@ -6,6 +6,7 @@
 	import UserForm from '$lib/index/user-form.svelte';
 	import SaleCostsTable from '$lib/index/sale-costs-table.svelte';
 	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
+import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
 </script>
 
 <svelte:head>
@@ -35,6 +36,10 @@
 		<MortgageForm />
 	</Col>
 </Row>
+
+<h2>Decreti attivi</h2>
+
+<ActiveLawsForm />
 
 <Row>
 	<Col>

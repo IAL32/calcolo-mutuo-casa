@@ -54,3 +54,8 @@ export interface MortgageCosts {
 
 	total: number;
 }
+
+export interface ActiveLaws {
+	// https://www.agenziaentrateriscossione.gov.it/it/Per-saperne-di-piu/covid-19/il-decreto-sostegni-bis/
+	dl_73_2021: boolean;
+}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { get_mortgage_plan } from '$lib/finance';
-import { toPrettyEuro } from '$lib/helpers';
+	import { toPrettyEuro } from '$lib/helpers';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { Table } from 'sveltestrap';
 </script>

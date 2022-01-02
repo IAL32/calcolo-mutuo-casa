@@ -7,7 +7,8 @@ const defaultValue: House = {
 	totalPrice: 1e5,
 	totalSize: 50,
 	seller: SELLER_TYPE.PRIVATE,
-	purpose: PURPOSE_TYPE.FIRST_HOUSE
+	purpose: PURPOSE_TYPE.FIRST_HOUSE,
+	yield: 350
 };
 
 const initialValue: House = browser

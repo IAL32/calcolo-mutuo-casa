@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { get_mortgage_plan } from '$lib/finance';
+import { toPrettyEuro } from '$lib/helpers';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { Table } from 'sveltestrap';
 </script>
 
-<div class="overflow-auto" style="max-height: 300px">
+<div class="overflow-auto">
 	<Table hover>
-		<thead class="position-sticky bg-light" style="top: 0; z-index: 1">
+		<thead class="position-sticky bg-light">
 			<tr>
 				<th style="width: 10%">Periodo</th>
 				<th>Muto pagato</th>
@@ -16,15 +17,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each get_mortgage_plan($mortgage) as mortgage_plan, period}
+			{#each get_mortgage_plan($mortgage) as mortgagePlan, period}
 				<tr>
-					<th>{period + 1}</th>
-					<th>{mortgage_plan.principal_paid.toFixed(2)}</th>
-					<th>{mortgage_plan.interest_paid.toFixed(2)}</th>
-					<th>{mortgage_plan.mortgage_paid.toFixed(2)}</th>
-					<th>{mortgage_plan.remaining_principal.toFixed(2)}</th>
+					<td>{period + 1}</td>
+					<td>{toPrettyEuro(mortgagePlan.principalPaid)}</td>
+					<td>{toPrettyEuro(mortgagePlan.interestPaid)}</td>
+					<td>{toPrettyEuro(mortgagePlan.mortgagePaid)}</td>
+					<td>{toPrettyEuro(mortgagePlan.remainingPrincipal)}</td>
 				</tr>
 			{/each}
 		</tbody>
 	</Table>
 </div>
+
+<style>
+	div {
+		max-height: 300px;
+	}
+
+	thead {
+		top: 0;
+		z-index: 1;
+	}
+</style>

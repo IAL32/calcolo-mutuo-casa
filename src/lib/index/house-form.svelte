@@ -51,3 +51,9 @@
 		</Input>
 	</Col>
 </FormGroup>
+<FormGroup row>
+	<Label for="house-yield" sm="2">Rendita Catastale</Label>
+	<Col sm="10">
+		<Input name="house-yield" type="number" bind:value={$house.yield} />
+	</Col>
+</FormGroup>

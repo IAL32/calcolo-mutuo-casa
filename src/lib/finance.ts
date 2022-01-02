@@ -1,5 +1,20 @@
-import { PERIOD_TYPE } from './enums';
-import type { Mortgage, MortgagePlan } from './types';
+import { PERIOD_TYPE, PURPOSE_TYPE, SELLER_TYPE } from './enums';
+import type { House, HouseSaleCosts, Mortgage, MortgagePlan } from './types';
+
+const REALTOR_FLAT_RATE_LIMIT = 1e6;
+const REALTOR_FLAT_RATE = 6000;
+const REALTOR_RATE = 0.03; // 3%
+
+const HOUSE_YIELD_CONSTANT = 115.5;
+const REGISTRY_TAX_COMPANY = 200;
+
+const MORTGAGE_TAX_PRIVATE = 50;
+const MORTGAGE_TAX_COMPANY = 200;
+
+const LAND_REGISTRY_TAX_PRIVATE = 50;
+const LAND_REGISTRY_TAX_COMPANY = 200;
+
+const NOTARY_COST = 1800;
 
 /**
  * From: https://superuser.com/a/871411/1473069
@@ -43,49 +58,128 @@ const ipmt_ = (
 
 /**
  * Calculates the mortgage amount according to the input mortgage information.
- * @param mortgage_data Mortgage data
+ * @param mortgageData Mortgage data
  * @returns number Amount of mortgage by period
  */
-export const calculate_mortgage = (mortgage_data: Mortgage): number => {
-	const numberOfPeriods: number = mortgage_data.period === PERIOD_TYPE.MONTHS ? 1 : 12;
+export const calculate_mortgage = (mortgageData: Mortgage): number => {
+	const numberOfPeriods: number = mortgageData.period === PERIOD_TYPE.MONTHS ? 1 : 12;
 	return pmt_(
-		mortgage_data.taeg / 100 / numberOfPeriods,
-		mortgage_data.time * numberOfPeriods,
-		mortgage_data.total
+		mortgageData.taeg / 100 / numberOfPeriods,
+		mortgageData.time * numberOfPeriods,
+		mortgageData.total
 	);
 };
 
 export const calculate_principal_paid_amount = (
-	mortgage_data: Mortgage,
+	mortgageData: Mortgage,
 	interestPeriod: number
 ): number => {
-	const pmt = calculate_mortgage(mortgage_data);
+	const pmt = calculate_mortgage(mortgageData);
 
-	return pmt - ipmt_(pmt, mortgage_data.total, mortgage_data.taeg / 100 / 12, interestPeriod);
+	return pmt - ipmt_(pmt, mortgageData.total, mortgageData.taeg / 100 / 12, interestPeriod);
 };
 
 export const calculate_interest_paid_amount = (
-	mortgage_data: Mortgage,
+	mortgagedata: Mortgage,
 	interestPeriod: number
 ): number => {
-	const pmt = calculate_mortgage(mortgage_data);
+	const pmt = calculate_mortgage(mortgagedata);
 
-	return ipmt_(pmt, mortgage_data.total, mortgage_data.taeg / 100 / 12, interestPeriod);
+	return ipmt_(pmt, mortgagedata.total, mortgagedata.taeg / 100 / 12, interestPeriod);
 };
 
-export const get_mortgage_plan = (mortgage_data: Mortgage): MortgagePlan[] => {
-	const numberOfPeriods: number = mortgage_data.period === PERIOD_TYPE.MONTHS ? 1 : 12;
+export const get_mortgage_plan = (mortgageData: Mortgage): MortgagePlan[] => {
+	const numberOfPeriods: number = mortgageData.period === PERIOD_TYPE.MONTHS ? 1 : 12;
 
-	const mortgage: number = calculate_mortgage(mortgage_data);
-	let remaining_principal = mortgage_data.total;
+	const mortgage: number = calculate_mortgage(mortgageData);
+	let remainingPrincipal = mortgageData.total;
 
-	return Array.from(Array(mortgage_data.time * numberOfPeriods)).map((_, i) => {
-		const principal_paid = calculate_principal_paid_amount(mortgage_data, i + 1);
+	return Array.from(Array(mortgageData.time * numberOfPeriods)).map((_, i) => {
+		const principalPaid = calculate_principal_paid_amount(mortgageData, i + 1);
 		return {
-			principal_paid,
-			interest_paid: calculate_interest_paid_amount(mortgage_data, i + 1),
-			mortgage_paid: mortgage,
-			remaining_principal: (remaining_principal -= principal_paid)
+			principalPaid,
+			interestPaid: calculate_interest_paid_amount(mortgageData, i + 1),
+			mortgagePaid: mortgage,
+			remainingPrincipal: (remainingPrincipal -= principalPaid)
 		};
 	});
+};
+
+export const calculate_realtor_cost = (houseValue: number): number => {
+	if (houseValue <= REALTOR_FLAT_RATE_LIMIT) {
+		return REALTOR_FLAT_RATE;
+	}
+
+	return REALTOR_RATE * houseValue;
+};
+
+export const calculate_registry_cost = (
+	houseValue: number,
+	houseYield: number,
+	purpose: PURPOSE_TYPE,
+	seller: SELLER_TYPE
+): number => {
+	const landRegistryValue: number = calculate_house_land_registry_value(houseYield);
+
+	if (seller === SELLER_TYPE.COMPANY) {
+		return REGISTRY_TAX_COMPANY;
+	}
+
+	console.log(landRegistryValue);
+	if (purpose == PURPOSE_TYPE.FIRST_HOUSE) {
+		return landRegistryValue * 0.02;
+	}
+
+	return houseValue * 0.09;
+};
+
+export const calculate_house_land_registry_value = (houseYield: number): number => {
+	return houseYield * HOUSE_YIELD_CONSTANT;
+};
+
+export const calculate_mortgage_tax = (seller: SELLER_TYPE): number => {
+	return seller === SELLER_TYPE.PRIVATE ? MORTGAGE_TAX_PRIVATE : MORTGAGE_TAX_COMPANY;
+};
+
+export const calculate_land_registry_tax = (seller: SELLER_TYPE): number => {
+	return seller === SELLER_TYPE.PRIVATE ? LAND_REGISTRY_TAX_PRIVATE : LAND_REGISTRY_TAX_COMPANY;
+};
+
+export const calculate_house_sale_vat = (
+	houseValue: number,
+	purpose: PURPOSE_TYPE,
+	seller: SELLER_TYPE
+): number => {
+	if (seller === SELLER_TYPE.PRIVATE) {
+		return 0;
+	}
+
+	if (purpose === PURPOSE_TYPE.FIRST_HOUSE) {
+		return houseValue * 0.04;
+	}
+
+	return houseValue * 0.1;
+};
+
+export const calculate_house_sale_costs = (house: House): HouseSaleCosts => {
+	const houseSaleCosts: HouseSaleCosts = {
+		realtor: calculate_realtor_cost(house.totalPrice),
+		registry: calculate_registry_cost(house.totalPrice, house.yield, house.purpose, house.seller),
+		mortgageTax: calculate_mortgage_tax(house.seller),
+		landRegistryTax: calculate_land_registry_tax(house.seller),
+		vat: calculate_house_sale_vat(house.totalPrice, house.purpose, house.seller),
+		notary: NOTARY_COST,
+
+		total: 0
+	};
+
+	houseSaleCosts.total =
+		houseSaleCosts.realtor +
+		houseSaleCosts.registry +
+		houseSaleCosts.mortgageTax +
+		houseSaleCosts.vat +
+		houseSaleCosts.notary +
+		houseSaleCosts.landRegistryTax;
+
+	return houseSaleCosts;
 };

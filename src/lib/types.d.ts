@@ -18,6 +18,7 @@ export interface House {
 	totalSize: number;
 	seller: SELLER_TYPE;
 	purpose: PURPOSE_TYPE;
+	yield: number; // rendita catastale
 }
 
 export interface Mortgage {
@@ -28,8 +29,19 @@ export interface Mortgage {
 }
 
 export interface MortgagePlan {
-	principal_paid: number;
-	interest_paid: number;
-	mortgage_paid: number;
-	remaining_principal: number;
+	principalPaid: number;
+	interestPaid: number;
+	mortgagePaid: number;
+	remainingPrincipal: number;
+}
+
+export interface HouseSaleCosts {
+	realtor: number;
+	registry: number;
+	mortgageTax: number; // imposta ipotecaria
+	landRegistryTax: number; // imposta catastale
+	vat: number;
+	notary: number;
+
+	total: number;
 }

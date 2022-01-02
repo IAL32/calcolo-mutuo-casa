@@ -5,7 +5,7 @@
 	import MortgageForm from '$lib/index/mortgage-form.svelte';
 	import MortgagePlanTable from '$lib/index/mortgage-plan-table.svelte';
 	import UserForm from '$lib/index/user-form.svelte';
-	import { mortgage } from '$lib/stores/mortgage';
+	import SaleCostsTable from '$lib/index/sale-costs-table.svelte';
 </script>
 
 <svelte:head>
@@ -35,6 +35,10 @@
 		<MortgageForm />
 	</Col>
 </Row>
+
+<h2>Costi legati alla compravendita</h2>
+
+<SaleCostsTable />
 
 <h2>Piano di ammortamento</h2>
 

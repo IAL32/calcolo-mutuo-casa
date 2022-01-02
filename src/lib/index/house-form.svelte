@@ -2,7 +2,7 @@
 	import { PURPOSE_TYPE, SELLER_TYPE } from '$lib/enums';
 	import { house } from '$lib/stores/house';
 
-	import { Col, FormGroup, Input, Label } from 'sveltestrap';
+	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label } from 'sveltestrap';
 
 	$: houseTotalPriceIsValid = $house.totalPrice >= 2;
 	$: houseTotalSizeIsValid = $house.totalSize >= 1;
@@ -11,26 +11,32 @@
 <FormGroup row>
 	<Label for="house-totalprice" sm="2">Prezzo di vendita</Label>
 	<Col sm="10">
-		<Input
-			name="house-totalprice"
-			type="number"
-			valid={houseTotalPriceIsValid}
-			invalid={!houseTotalPriceIsValid}
-			bind:value={$house.totalPrice}
-			step={1000}
-			placeholder="Inserisci il prezzo totale della casa" />
+		<InputGroup>
+			<InputGroupText>&euro;</InputGroupText>
+			<Input
+				name="house-totalprice"
+				type="number"
+				valid={houseTotalPriceIsValid}
+				invalid={!houseTotalPriceIsValid}
+				bind:value={$house.totalPrice}
+				step={1000}
+				placeholder="Inserisci il prezzo totale della casa" />
+		</InputGroup>
 	</Col>
 </FormGroup>
 <FormGroup row>
 	<Label for="house-totalsize" sm="2">Dimensione</Label>
 	<Col sm="10">
-		<Input
-			name="house-totalsize"
-			type="number"
-			valid={houseTotalSizeIsValid}
-			invalid={!houseTotalSizeIsValid}
-			bind:value={$house.totalSize}
-			placeholder="Dimensione in metri quadri della casa" />
+		<InputGroup>
+			<Input
+				name="house-totalsize"
+				type="number"
+				valid={houseTotalSizeIsValid}
+				invalid={!houseTotalSizeIsValid}
+				bind:value={$house.totalSize}
+				placeholder="Dimensione in metri quadri della casa" />
+			<InputGroupText>m<sup>2</sup></InputGroupText>
+		</InputGroup>
 	</Col>
 </FormGroup>
 <FormGroup row>
@@ -54,6 +60,9 @@
 <FormGroup row>
 	<Label for="house-yield" sm="2">Rendita Catastale</Label>
 	<Col sm="10">
-		<Input name="house-yield" type="number" bind:value={$house.yield} />
+		<InputGroup>
+			<InputGroupText>&euro;</InputGroupText>
+			<Input name="house-yield" type="number" bind:value={$house.yield} />
+		</InputGroup>
 	</Col>
 </FormGroup>

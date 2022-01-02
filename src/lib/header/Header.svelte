@@ -24,6 +24,11 @@
 					</NavLink>
 				</NavItem>
 				<NavItem>
+					<NavLink class="px-2 link-secondary" active={$page.path === '/piano-di-ammortamento'} href="/piano-di-ammortamento">
+						Piano di Ammortamento
+					</NavLink>
+				</NavItem>
+				<NavItem>
 					<NavLink class="px-2 link-secondary" active={$page.path === '/about'} href="/about">
 						About
 					</NavLink>

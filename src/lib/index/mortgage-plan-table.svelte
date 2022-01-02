@@ -32,7 +32,7 @@ import { toPrettyEuro } from '$lib/helpers';
 
 <style>
 	div {
-		max-height: 300px;
+		max-height: 800px;
 	}
 
 	thead {

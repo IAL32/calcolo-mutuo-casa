@@ -3,7 +3,6 @@
 
 	import HouseForm from '$lib/index/house-form.svelte';
 	import MortgageForm from '$lib/index/mortgage-form.svelte';
-	import MortgagePlanTable from '$lib/index/mortgage-plan-table.svelte';
 	import UserForm from '$lib/index/user-form.svelte';
 	import SaleCostsTable from '$lib/index/sale-costs-table.svelte';
 	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
@@ -31,7 +30,7 @@
 		<HouseForm />
 	</Col>
 	<Col sm="12" lg="6">
-		<h3>Mutuo</h3>
+		<h3>Mutuo - <a href="/piano-di-ammortamento"><small>(vedi piano di ammortamento)</small></a></h3>
 
 		<MortgageForm />
 	</Col>
@@ -49,7 +48,3 @@
 		<MortgageCostsTable />
 	</Col>
 </Row>
-
-<h2>Piano di ammortamento</h2>
-
-<MortgagePlanTable />

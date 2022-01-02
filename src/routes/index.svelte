@@ -7,6 +7,7 @@
 	import SaleCostsTable from '$lib/index/sale-costs-table.svelte';
 	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
 import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
+import TotalCostsTable from '$lib/index/total-costs-table.svelte';
 </script>
 
 <svelte:head>
@@ -18,8 +19,8 @@ import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
 	<h1>Calcolo Mutuo</h1>
 	<ButtonToolbar class="mb-2 mb-md-0">
 		<ButtonGroup class="me-2">
-			<Button size="sm" outline color="secondary">Share</Button>
-			<Button size="sm" outline color="secondary">Export</Button>
+			<Button size="sm" outline color="secondary">Condividi</Button>
+			<Button size="sm" outline color="secondary">Salva come PDF</Button>
 		</ButtonGroup>
 	</ButtonToolbar>
 </div>
@@ -53,3 +54,7 @@ import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
 		<MortgageCostsTable />
 	</Col>
 </Row>
+
+<h2>Costi totali</h2>
+
+<TotalCostsTable />

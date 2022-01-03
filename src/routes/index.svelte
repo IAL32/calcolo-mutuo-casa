@@ -45,7 +45,7 @@
 	</Col>
 	<Col sm="12" lg="6">
 		<h3>
-			Mutuo - <a href={'/piano-di-ammortamento' + currentConfiguration}
+			Mutuo - <a href={'./piano-di-ammortamento' + currentConfiguration}
 				><small>(vedi piano di ammortamento)</small></a>
 		</h3>
 

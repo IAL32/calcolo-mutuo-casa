@@ -15,19 +15,19 @@
 	<Container>
 		<div
 			class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-			<NavbarBrand href={"/" + currentConfiguration}>Home</NavbarBrand>
+			<NavbarBrand href={"./" + currentConfiguration}>Home</NavbarBrand>
 
 			<Nav class="col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 				<NavItem>
 					<NavLink
 						class="px-2 link-secondary"
-						active={$page.path === '/piano-di-ammortamento'}
-						href={"/piano-di-ammortamento" + currentConfiguration}>
+						active={$page.url.pathname === '/piano-di-ammortamento'}
+						href={"./piano-di-ammortamento" + currentConfiguration}>
 						Piano di Ammortamento
 					</NavLink>
 				</NavItem>
 				<NavItem>
-					<NavLink class="px-2 link-secondary" active={$page.path === '/about'} href="/about">
+					<NavLink class="px-2 link-secondary" active={$page.url.pathname === '/about'} href="./about">
 						About
 					</NavLink>
 				</NavItem>

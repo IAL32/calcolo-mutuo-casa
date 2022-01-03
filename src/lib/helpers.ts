@@ -19,7 +19,7 @@ export const toConfigurationObject = <T>(prefix: string, obj: T): Record<string,
 	if (obj) {
 		Object.keys(obj).forEach((key) => {
 			const capitalizedKey: string = prefix + '_' + key;
-			configurationObject[capitalizedKey] = obj[key].toString();
+			configurationObject[capitalizedKey] = obj[key] ? obj[key].toString() : null;
 		});
 	}
 

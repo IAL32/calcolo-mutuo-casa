@@ -410,7 +410,7 @@ function addMortgagePlanTable(pdf: PDFKit.PDFDocument, mortgage: Mortgage) {
 	let currentX = startingX;
 
 	// Mutuo
-	pdf.text('\n');
+	pdf.addPage();
 	pdf.text('Piano di ammortamento:', startingX);
 
 	addTableColumns(

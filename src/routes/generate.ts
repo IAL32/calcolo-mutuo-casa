@@ -474,6 +474,100 @@ function addMortgagePlanTable(pdf: PDFKit.PDFDocument, mortgage: Mortgage) {
 	pdf.x = startingX;
 }
 
+function addTotalCostsTable(pdf: PDFKit.PDFDocument, activeLaws: ActiveLaws, house: House) {
+	const saleCosts = calculateHouseSaleCosts(activeLaws, house);
+	const mortgageCosts = calculateMortgageCosts(activeLaws, house.totalPrice, house.purpose);
+
+	const total = saleCosts.total + mortgageCosts.total;
+
+	const startingX = pdf.x;
+	let currentX = startingX;
+
+	const columnPosition = 200;
+
+	// Mutuo
+	pdf.text('\n');
+	pdf.text('Costi totali:', startingX);
+
+	addTableColumns(
+		pdf,
+		[
+			{
+				text: 'Costi legati alla compravendita',
+				x: currentX
+			},
+			{
+				text: toPrettyEuro(saleCosts.total),
+				x: (currentX += columnPosition)
+			}
+		],
+		pdf.y
+	);
+
+	currentX = startingX;
+
+	addTableColumns(
+		pdf,
+		[
+			{
+				text: 'Costi legati al mutuo',
+				x: currentX
+			},
+			{
+				text: toPrettyEuro(mortgageCosts.total),
+				x: (currentX += columnPosition)
+			}
+		],
+		pdf.y
+	);
+
+	currentX = startingX;
+
+	pdf
+		.moveTo(currentX, pdf.y)
+		.lineTo(currentX + (columnPosition + 80), pdf.y)
+		.stroke();
+
+	pdf.text('\n');
+
+	addTableColumns(
+		pdf,
+		[
+			{
+				text: 'Totale',
+				x: currentX
+			},
+			{
+				text: toPrettyEuro(total),
+				x: (currentX += columnPosition)
+			}
+		],
+		pdf.y
+	);
+
+	pdf.x = startingX;
+}
+
+function addFooter(pdf: PDFKit.PDFDocument) {
+	const githubLink = 'https://github.com/IAL32/calcolo-mutuo-casa';
+
+	pdf
+		.text(
+			'Sviluppato da Adrian Castro. Visualizza il sorgente su ',
+			0,
+			pdf.page.height - pdf.page.margins.bottom - 30,
+			{
+				align: 'center'
+			}
+		)
+		.text(githubLink, {
+			underline: true,
+			link: githubLink,
+			continued: true,
+			align: 'center'
+		});
+}
+
 function generateConfigurationTable(
 	pdf: PDFKit.PDFDocument,
 	user: User,
@@ -489,7 +583,10 @@ function generateConfigurationTable(
 	addMortgageTable(pdf, mortgage);
 	addSaleCostsTable(pdf, activeLaws, house);
 	addMortgageCostsTable(pdf, activeLaws, house);
+	addTotalCostsTable(pdf, activeLaws, house);
 	addMortgagePlanTable(pdf, mortgage);
+
+	addFooter(pdf);
 }
 
 function generatePDF(
@@ -502,7 +599,9 @@ function generatePDF(
 		const pdf: PDFKit.PDFDocument = new PdfGenerator();
 		const buffers = [];
 
-		pdf.text('Simulazione di mutuo', { align: 'center' });
+		pdf.fontSize(24).text('Simulazione di mutuo', { align: 'center' });
+
+		pdf.fontSize(12);
 
 		generateConfigurationTable(pdf, user, mortgage, house, activeLaws);
 

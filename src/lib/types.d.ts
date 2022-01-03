@@ -1,4 +1,4 @@
-import type { PURPOSE_TYPE, SELLER_TYPE } from './enums';
+import type { PurposeType, SellerType } from './enums';
 
 /**
  * Can be made globally available by placing this
@@ -16,8 +16,8 @@ export interface House {
 	totalPrice: number;
 
 	totalSize: number;
-	seller: SELLER_TYPE;
-	purpose: PURPOSE_TYPE;
+	seller: SellerType;
+	purpose: PurposeType;
 	yield: number; // rendita catastale
 }
 

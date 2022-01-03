@@ -6,8 +6,16 @@
 	import UserForm from '$lib/index/user-form.svelte';
 	import SaleCostsTable from '$lib/index/sale-costs-table.svelte';
 	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
-import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
-import TotalCostsTable from '$lib/index/total-costs-table.svelte';
+	import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
+	import TotalCostsTable from '$lib/index/total-costs-table.svelte';
+	import { generateCurrentConfigurationURLParams } from '$lib/helpers';
+	import { user } from '$lib/stores/user';
+	import { house } from '$lib/stores/house';
+	import { mortgage } from '$lib/stores/mortgage';
+	import { activeLaws } from '$lib/stores/active-laws';
+
+	$: currentConfiguration =
+		'?' + generateCurrentConfigurationURLParams($user, $house, $mortgage, $activeLaws);
 </script>
 
 <svelte:head>
@@ -19,8 +27,12 @@ import TotalCostsTable from '$lib/index/total-costs-table.svelte';
 	<h1>Calcolo Mutuo</h1>
 	<ButtonToolbar class="mb-2 mb-md-0">
 		<ButtonGroup class="me-2">
-			<Button size="sm" outline color="secondary">Condividi</Button>
-			<Button size="sm" outline color="secondary">Salva come PDF</Button>
+			<Button size="sm" outline color="secondary" href={'/' + currentConfiguration}>
+				Condividi
+			</Button>
+			<Button size="sm" outline color="secondary" rel="external" href={'/generate' + currentConfiguration}>
+				Salva come PDF
+			</Button>
 		</ButtonGroup>
 	</ButtonToolbar>
 </div>
@@ -32,7 +44,10 @@ import TotalCostsTable from '$lib/index/total-costs-table.svelte';
 		<HouseForm />
 	</Col>
 	<Col sm="12" lg="6">
-		<h3>Mutuo - <a href="/piano-di-ammortamento"><small>(vedi piano di ammortamento)</small></a></h3>
+		<h3>
+			Mutuo - <a href={'/piano-di-ammortamento' + currentConfiguration}
+				><small>(vedi piano di ammortamento)</small></a>
+		</h3>
 
 		<MortgageForm />
 	</Col>

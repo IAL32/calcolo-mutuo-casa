@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { calculate_house_sale_costs } from '$lib/finance';
+	import { calculateHouseSaleCosts } from '$lib/finance';
 	import { toPrettyEuro } from '$lib/helpers';
 	import { activeLaws } from '$lib/stores/active-laws';
 	import { house } from '$lib/stores/house';
 	import { Table } from 'sveltestrap';
 
-	$: saleCosts = calculate_house_sale_costs($activeLaws, $house);
+	$: saleCosts = calculateHouseSaleCosts($activeLaws, $house);
 </script>
 
 <Table responsive>

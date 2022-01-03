@@ -1,18 +1,31 @@
 import { browser } from '$app/env';
-import { PERIOD_TYPE } from '$lib/enums';
+import { PeriodType } from '$lib/enums';
+import { fromURLSearchParamsToConfiguration, populateFromConfiguration } from '$lib/helpers';
 import type { Mortgage } from '$lib/types';
 import { writable } from 'svelte/store';
 
-const defaultValue: Mortgage = {
+export const defaultValue: Mortgage = {
 	total: 8e4,
-	period: PERIOD_TYPE.YEARS,
+	period: PeriodType.YEARS,
 	time: 30,
 	taeg: 1.15
 };
 
-const initialValue: Mortgage = browser
-	? JSON.parse(window.localStorage.getItem('mortgage')) ?? defaultValue
-	: defaultValue;
+const urlSearchParams = browser ? fromURLSearchParamsToConfiguration(window.location.search) : {};
+
+let initialValue: Mortgage = defaultValue;
+
+if (Object.keys(urlSearchParams).length > 0) {
+	populateFromConfiguration(initialValue, 'mortgage', urlSearchParams);
+} else {
+	if (browser) {
+		try {
+			initialValue = JSON.parse(window.localStorage.getItem('mortgage')) ?? defaultValue;
+		} catch (e) {
+			//
+		}
+	}
+}
 
 export const mortgage = writable<Mortgage>(initialValue);
 

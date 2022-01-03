@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { PERIOD_TYPE } from '$lib/enums';
+	import { PeriodType } from '$lib/enums';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
 
 	$: mortgageTotalIsValid = $mortgage.total >= 2 && $house.totalPrice >= $mortgage.total;
-	let mortgagePercent: number = calculateMortgagePercent($mortgage.total, $house.totalPrice);
+
+	$: mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
 
 	function calculateMortgagePercent(mortgageTotal, houseTotalPrice) {
 		return parseFloat(((mortgageTotal / houseTotalPrice) * 100).toFixed(2));
@@ -69,8 +70,8 @@
 	<Label for="mortgage-period" sm="2">Tempo</Label>
 	<Col sm="5">
 		<Input name="mortgage-period" type="select" bind:value={$mortgage.period}>
-			<option value={PERIOD_TYPE.MONTHS}>Mesi</option>
-			<option value={PERIOD_TYPE.YEARS}>Anni</option>
+			<option value={PeriodType.MONTHS}>Mesi</option>
+			<option value={PeriodType.YEARS}>Anni</option>
 		</Input>
 	</Col>
 	<Col sm="5">
@@ -91,10 +92,9 @@
 			<Input
 				name="mortgage-taeg"
 				type="number"
-				on:input={handleMortgagePercentChange}
 				bind:value={$mortgage.taeg}
 				step={0.01}
-				placeholder="Inserisci il valore del mutuo da richiedere" />
+				placeholder="Inserisci il TAEG" />
 		</InputGroup>
 	</Col>
 </FormGroup>

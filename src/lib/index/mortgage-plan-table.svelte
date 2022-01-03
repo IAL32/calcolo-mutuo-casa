@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { get_mortgage_plan } from '$lib/finance';
+	import { calculateMortgagePlan } from '$lib/finance';
 	import { toPrettyEuro } from '$lib/helpers';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { Table } from 'sveltestrap';
@@ -17,7 +17,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each get_mortgage_plan($mortgage) as mortgagePlan, period}
+			{#each calculateMortgagePlan($mortgage) as mortgagePlan, period}
 				<tr>
 					<td>{period + 1}</td>
 					<td>{toPrettyEuro(mortgagePlan.principalPaid)}</td>

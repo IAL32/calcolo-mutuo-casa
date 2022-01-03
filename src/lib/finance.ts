@@ -1,5 +1,4 @@
-import { PERIOD_TYPE, PURPOSE_TYPE, SELLER_TYPE } from './enums';
-import { activeLaws } from './stores/active-laws';
+import { PeriodType, PurposeType, SellerType } from './enums';
 import type {
 	ActiveLaws,
 	House,
@@ -78,7 +77,7 @@ const ipmt_ = (
  * @returns number Amount of mortgage by period
  */
 export const calculate_mortgage = (mortgageData: Mortgage): number => {
-	const numberOfPeriods: number = mortgageData.period === PERIOD_TYPE.MONTHS ? 1 : 12;
+	const numberOfPeriods: number = mortgageData.period === PeriodType.MONTHS ? 1 : 12;
 	return pmt_(
 		mortgageData.taeg / 100 / numberOfPeriods,
 		mortgageData.time * numberOfPeriods,
@@ -104,8 +103,8 @@ export const calculate_interest_paid_amount = (
 	return ipmt_(pmt, mortgagedata.total, mortgagedata.taeg / 100 / 12, interestPeriod);
 };
 
-export const get_mortgage_plan = (mortgageData: Mortgage): MortgagePlan[] => {
-	const numberOfPeriods: number = mortgageData.period === PERIOD_TYPE.MONTHS ? 1 : 12;
+export const calculateMortgagePlan = (mortgageData: Mortgage): MortgagePlan[] => {
+	const numberOfPeriods: number = mortgageData.period === PeriodType.MONTHS ? 1 : 12;
 
 	const mortgage: number = calculate_mortgage(mortgageData);
 	let remainingPrincipal = mortgageData.total;
@@ -133,8 +132,8 @@ export const calculate_registry_cost = (
 	activeLaws: ActiveLaws,
 	houseValue: number,
 	houseYield: number,
-	purpose: PURPOSE_TYPE,
-	seller: SELLER_TYPE
+	purpose: PurposeType,
+	seller: SellerType
 ): number => {
 	if (activeLaws.dl_73_2021) {
 		return 0;
@@ -142,11 +141,11 @@ export const calculate_registry_cost = (
 
 	const landRegistryValue: number = calculate_house_land_registry_value(houseYield);
 
-	if (seller === SELLER_TYPE.COMPANY) {
+	if (seller === SellerType.COMPANY) {
 		return REGISTRY_TAX_COMPANY;
 	}
 
-	if (purpose == PURPOSE_TYPE.FIRST_HOUSE) {
+	if (purpose == PurposeType.FIRST_HOUSE) {
 		return landRegistryValue * 0.02;
 	}
 
@@ -157,35 +156,35 @@ export const calculate_house_land_registry_value = (houseYield: number): number 
 	return houseYield * HOUSE_YIELD_CONSTANT;
 };
 
-export const calculate_mortgage_tax = (activeLaws: ActiveLaws, seller: SELLER_TYPE): number => {
+export const calculate_mortgage_tax = (activeLaws: ActiveLaws, seller: SellerType): number => {
 	if (activeLaws.dl_73_2021) {
 		return 0;
 	}
 
-	return seller === SELLER_TYPE.PRIVATE ? MORTGAGE_TAX_PRIVATE : MORTGAGE_TAX_COMPANY;
+	return seller === SellerType.PRIVATE ? MORTGAGE_TAX_PRIVATE : MORTGAGE_TAX_COMPANY;
 };
 
 export const calculate_land_registry_tax = (
 	activeLaws: ActiveLaws,
-	seller: SELLER_TYPE
+	seller: SellerType
 ): number => {
 	if (activeLaws.dl_73_2021) {
 		return 0;
 	}
 
-	return seller === SELLER_TYPE.PRIVATE ? LAND_REGISTRY_TAX_PRIVATE : LAND_REGISTRY_TAX_COMPANY;
+	return seller === SellerType.PRIVATE ? LAND_REGISTRY_TAX_PRIVATE : LAND_REGISTRY_TAX_COMPANY;
 };
 
 export const calculate_house_sale_vat = (
 	houseValue: number,
-	purpose: PURPOSE_TYPE,
-	seller: SELLER_TYPE
+	purpose: PurposeType,
+	seller: SellerType
 ): number => {
-	if (seller === SELLER_TYPE.PRIVATE) {
+	if (seller === SellerType.PRIVATE) {
 		return 0;
 	}
 
-	if (purpose === PURPOSE_TYPE.FIRST_HOUSE) {
+	if (purpose === PurposeType.FIRST_HOUSE) {
 		return houseValue * 0.04;
 	}
 
@@ -195,18 +194,18 @@ export const calculate_house_sale_vat = (
 export const calculate_mortgage_alternate_tax = (
 	activeLaws: ActiveLaws,
 	houseValue: number,
-	purpose: PURPOSE_TYPE
+	purpose: PurposeType
 ): number => {
 	if (activeLaws.dl_73_2021) {
 		return 0;
 	}
 
-	return purpose === PURPOSE_TYPE.FIRST_HOUSE
+	return purpose === PurposeType.FIRST_HOUSE
 		? houseValue * ALTERNATE_TAX_FIRST_HOUSE
 		: houseValue * ALTERNATE_TAX_SECOND_HOUSE;
 };
 
-export const calculate_house_sale_costs = (
+export const calculateHouseSaleCosts = (
 	activeLaws: ActiveLaws,
 	house: House
 ): HouseSaleCosts => {
@@ -238,10 +237,10 @@ export const calculate_house_sale_costs = (
 	return houseSaleCosts;
 };
 
-export const calculate_mortgage_costs = (
+export const calculateMortgageCosts = (
 	activeLaws: ActiveLaws,
 	houseValue: number,
-	purpose: PURPOSE_TYPE
+	purpose: PurposeType
 ): MortgageCosts => {
 	const mortgageCosts: MortgageCosts = {
 		openingMortgage: OPENING_MORTGAGE_COST,

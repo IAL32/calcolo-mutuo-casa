@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PURPOSE_TYPE, SELLER_TYPE } from '$lib/enums';
+	import { PurposeType, SellerType } from '$lib/enums';
 	import { house } from '$lib/stores/house';
 
 	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label } from 'sveltestrap';
@@ -43,8 +43,8 @@
 	<Label for="house-seller" sm="2">Venditore</Label>
 	<Col sm="10">
 		<Input name="house-seller" type="select" bind:value={$house.seller}>
-			<option value={SELLER_TYPE.PRIVATE}>Privato</option>
-			<option value={SELLER_TYPE.COMPANY}>Azienda</option>
+			<option value={SellerType.PRIVATE}>Privato</option>
+			<option value={SellerType.COMPANY}>Azienda</option>
 		</Input>
 	</Col>
 </FormGroup>
@@ -52,8 +52,8 @@
 	<Label for="house-purpose" sm="2">Destinazione dell'immobile</Label>
 	<Col sm="10">
 		<Input name="house-purpose" type="select" bind:value={$house.purpose}>
-			<option value={PURPOSE_TYPE.FIRST_HOUSE}>Prima casa</option>
-			<option value={PURPOSE_TYPE.SECOND_HOUSE}>Seconda casa</option>
+			<option value={PurposeType.FIRST_HOUSE}>Prima casa</option>
+			<option value={PurposeType.SECOND_HOUSE}>Seconda casa</option>
 		</Input>
 	</Col>
 </FormGroup>

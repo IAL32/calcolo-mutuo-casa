@@ -8,9 +8,6 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		paths: {
-			base: process.env.NODE_ENV === 'development' ? '' : '/calcolo-mutuo-casa'
-		},
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',

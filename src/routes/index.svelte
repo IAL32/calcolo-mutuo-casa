@@ -30,7 +30,12 @@
 			<Button size="sm" outline color="secondary" href={'/' + currentConfiguration}>
 				Condividi
 			</Button>
-			<Button size="sm" outline color="secondary" rel="external" href={'./generate' + currentConfiguration}>
+			<Button
+				size="sm"
+				outline
+				color="secondary"
+				rel="external"
+				href={'/generate' + currentConfiguration}>
 				Salva come PDF
 			</Button>
 		</ButtonGroup>
@@ -45,8 +50,9 @@
 	</Col>
 	<Col sm="12" lg="6">
 		<h3>
-			Mutuo - <a href={'./piano-di-ammortamento' + currentConfiguration}
-				><small>(vedi piano di ammortamento)</small></a>
+			Mutuo - <a href={'/piano-di-ammortamento' + currentConfiguration}>
+				<small>(vedi piano di ammortamento)</small>
+			</a>
 		</h3>
 
 		<MortgageForm />

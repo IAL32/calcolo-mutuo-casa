@@ -5,7 +5,6 @@
 	import { Table } from 'sveltestrap';
 </script>
 
-<div class="overflow-auto">
 	<Table hover>
 		<thead class="position-sticky bg-light">
 			<tr>
@@ -28,13 +27,8 @@
 			{/each}
 		</tbody>
 	</Table>
-</div>
 
 <style>
-	div {
-		max-height: 800px;
-	}
-
 	thead {
 		top: 0;
 		z-index: 1;

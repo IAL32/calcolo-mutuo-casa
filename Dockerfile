@@ -2,19 +2,19 @@ FROM node:16.13-alpine
 
 WORKDIR /usr/src/app
 
-COPY rollup.config.js ./
 COPY package*.json ./
 
 RUN npm install
 
 COPY ./src ./src
 COPY ./static ./static
-COPY ./public ./public
+COPY ./svelte.config.js ./
+COPY ./tsconfig.json ./
 
-RUN npm run-script build
+RUN npm run build
 
-EXPOSE 5000
+EXPOSE 3000
 
 ENV HOST=0.0.0.0
 
-CMD [ "npm", "start" ]
+CMD [ "node", "build/index.js" ]

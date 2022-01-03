@@ -619,13 +619,13 @@ function generatePDF(
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function get({ query }: { query: URLSearchParams }) {
+export async function get({ url: { searchParams } }: { url: { searchParams: URLSearchParams } }) {
 	const user: User = userDefaultValue;
 	const mortgage: Mortgage = mortgageDefaultValue;
 	const house: House = houseDefaultValue;
 	const activeLaws: ActiveLaws = activeLawsDefaultValue;
 
-	const configuration = fromURLSearchParamsToConfiguration(query);
+	const configuration = fromURLSearchParamsToConfiguration(searchParams);
 
 	populateAllFromConfiguration(
 		[

@@ -9,7 +9,7 @@ const config = {
 
 	kit: {
 		paths: {
-			base: process.env.NODE_ENV ? '' : '/calcolo-mutuo-casa'
+			base: process.env.NODE_ENV === 'development' ? '' : '/calcolo-mutuo-casa'
 		},
 		adapter: adapter({
 			pages: 'build',

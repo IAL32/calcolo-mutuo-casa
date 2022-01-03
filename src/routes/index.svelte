@@ -30,7 +30,7 @@
 			<Button size="sm" outline color="secondary" href={'/' + currentConfiguration}>
 				Condividi
 			</Button>
-			<Button size="sm" outline color="secondary" rel="external" href={'/generate' + currentConfiguration}>
+			<Button size="sm" outline color="secondary" rel="external" href={'./generate' + currentConfiguration}>
 				Salva come PDF
 			</Button>
 		</ButtonGroup>

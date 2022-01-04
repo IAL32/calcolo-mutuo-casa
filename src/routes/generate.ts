@@ -10,12 +10,12 @@ import {
 	toPrettyEuro,
 	toPrettyNumber
 } from '$lib/helpers';
-import { PeriodType, PurposeType, SellerType } from '$lib/enums';
 import {
 	calculateHouseSaleCosts,
 	calculateMortgageCosts,
 	calculateMortgagePlan
 } from '$lib/finance';
+import { PeriodTypeHelper, PurposeTypeHelper, SellerTypeHelper } from '$lib/helpers/EnumHelper';
 
 function addTableColumns(
 	pdf: PDFKit.PDFDocument,
@@ -90,11 +90,11 @@ function addHouseTable(pdf: PDFKit.PDFDocument, house: House) {
 				x: (currentX += 100)
 			},
 			{
-				text: SellerType.toString(house.seller),
+				text: SellerTypeHelper.toString(house.seller),
 				x: (currentX += 75)
 			},
 			{
-				text: PurposeType.toString(house.purpose),
+				text: PurposeTypeHelper.toString(house.purpose),
 				x: (currentX += 60)
 			},
 			{
@@ -145,7 +145,7 @@ function addMortgageTable(pdf: PDFKit.PDFDocument, mortgage: Mortgage) {
 				x: currentX
 			},
 			{
-				text: `${mortgage.time} ${PeriodType.toString(mortgage.period)}`,
+				text: `${mortgage.time} ${PeriodTypeHelper.toString(mortgage.period)}`,
 				x: (currentX += 80)
 			},
 			{

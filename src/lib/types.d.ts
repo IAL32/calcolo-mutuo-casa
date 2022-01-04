@@ -1,4 +1,4 @@
-import type { PurposeType, SellerType } from './enums';
+import type { PeriodType, PurposeType, SellerType } from './enums';
 
 /**
  * Can be made globally available by placing this
@@ -23,7 +23,7 @@ export interface House {
 
 export interface Mortgage {
 	total: number;
-	period: PERIOD_TYPE;
+	period: PeriodType;
 	time: number;
 	taeg: number;
 }

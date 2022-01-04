@@ -19,7 +19,7 @@ export const toConfigurationObject = <T>(prefix: string, obj: T): Record<string,
 	if (obj) {
 		Object.keys(obj).forEach((key) => {
 			const capitalizedKey: string = prefix + '_' + key;
-			configurationObject[capitalizedKey] = obj[key] ? obj[key].toString() : null;
+			configurationObject[capitalizedKey] = obj[key] !== null ? obj[key].toString() : null;
 		});
 	}
 
@@ -77,13 +77,13 @@ export const fromURLSearchParamsToConfiguration = (
 };
 
 export const populateAllFromConfiguration = (
-	objects: { obj: unknown, prefix: string }[],
+	objects: { obj: unknown; prefix: string }[],
 	configuration: Record<string, unknown>
 ): void => {
 	objects.forEach((item) => {
 		populateFromConfiguration(item.obj, item.prefix, configuration);
 	});
-}
+};
 
 export const populateFromConfiguration = <T>(
 	obj: T,

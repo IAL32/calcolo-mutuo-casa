@@ -1,9 +1,16 @@
 <script lang="ts">
-	import { Row } from 'sveltestrap';
+	import { Col, Row } from 'sveltestrap';
 </script>
 
 <svelte:head>
 	<title>About</title>
 </svelte:head>
 
-<Row>About</Row>
+<Row>
+	<Col class="text-center">
+		Ciao! Questo sito è stato originariamente sviluppato da <a
+			href="https://adct.it"
+			rel="external">Adrian Castro</a>, ed il codice sorgente può essere visionato su
+		<a href="https://github.com/IAL32/calcolo-mutuo-casa" rel="external">GitHub</a>.
+	</Col>
+</Row>

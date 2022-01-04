@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PeriodType } from '$lib/enums';
+import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
@@ -70,8 +71,8 @@
 	<Label for="mortgage-period" sm="2">Tempo</Label>
 	<Col sm="5">
 		<Input name="mortgage-period" type="select" bind:value={$mortgage.period}>
-			<option value={PeriodType.MONTHS}>Mesi</option>
-			<option value={PeriodType.YEARS}>Anni</option>
+			<option value={PeriodType.MONTHS}>{PeriodTypeHelper.toString(PeriodType.MONTHS)}</option>
+			<option value={PeriodType.YEARS}>{PeriodTypeHelper.toString(PeriodType.YEARS)}</option>
 		</Input>
 	</Col>
 	<Col sm="5">

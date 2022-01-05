@@ -8,18 +8,19 @@
 	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
 	import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
 	import TotalCostsTable from '$lib/index/total-costs-table.svelte';
-	import { generateCurrentConfigurationURLParams } from '$lib/helpers';
+	import { generateCurrentConfigurationURLParams, toPrettyEuro } from '$lib/helpers';
 	import { user } from '$lib/stores/user';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { activeLaws } from '$lib/stores/active-laws';
+	import { calculateMortgage } from '$lib/finance';
 
 	$: currentConfiguration =
 		'?' + generateCurrentConfigurationURLParams($user, $house, $mortgage, $activeLaws);
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Calcolo Rata Mutuo</title>
 </svelte:head>
 
 <div
@@ -54,6 +55,7 @@
 				<small>(vedi piano di ammortamento)</small>
 			</a>
 		</h3>
+		<p class="text-muted">Stima: {toPrettyEuro(calculateMortgage($mortgage))} /mese</p>
 
 		<MortgageForm />
 	</Col>

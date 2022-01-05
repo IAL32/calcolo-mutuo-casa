@@ -76,7 +76,7 @@ const ipmt_ = (
  * @param mortgageData Mortgage data
  * @returns number Amount of mortgage by period
  */
-export const calculate_mortgage = (mortgageData: Mortgage): number => {
+export const calculateMortgage = (mortgageData: Mortgage): number => {
 	const numberOfPeriods: number = mortgageData.period === PeriodType.MONTHS ? 1 : 12;
 	return pmt_(
 		mortgageData.taeg / 100 / numberOfPeriods,
@@ -89,7 +89,7 @@ export const calculate_principal_paid_amount = (
 	mortgageData: Mortgage,
 	interestPeriod: number
 ): number => {
-	const pmt = calculate_mortgage(mortgageData);
+	const pmt = calculateMortgage(mortgageData);
 
 	return pmt - ipmt_(pmt, mortgageData.total, mortgageData.taeg / 100 / 12, interestPeriod);
 };
@@ -98,7 +98,7 @@ export const calculate_interest_paid_amount = (
 	mortgagedata: Mortgage,
 	interestPeriod: number
 ): number => {
-	const pmt = calculate_mortgage(mortgagedata);
+	const pmt = calculateMortgage(mortgagedata);
 
 	return ipmt_(pmt, mortgagedata.total, mortgagedata.taeg / 100 / 12, interestPeriod);
 };
@@ -106,7 +106,7 @@ export const calculate_interest_paid_amount = (
 export const calculateMortgagePlan = (mortgageData: Mortgage): MortgagePlan[] => {
 	const numberOfPeriods: number = mortgageData.period === PeriodType.MONTHS ? 1 : 12;
 
-	const mortgage: number = calculate_mortgage(mortgageData);
+	const mortgage: number = calculateMortgage(mortgageData);
 	let remainingPrincipal = mortgageData.total;
 
 	return Array.from(Array(mortgageData.time * numberOfPeriods)).map((_, i) => {

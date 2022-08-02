@@ -3,12 +3,14 @@
 	import { toPrettyEuro } from '$lib/helpers';
 	import { activeLaws } from '$lib/stores/active-laws';
 	import { house } from '$lib/stores/house';
+	import { mortgage } from '$lib/stores/mortgage';
 	import { Col, Row, Table } from 'sveltestrap';
 
 	$: saleCosts = calculateHouseSaleCosts($activeLaws, $house);
 	$: mortgageCosts = calculateMortgageCosts($activeLaws, $house.totalPrice, $house.purpose);
 
-  $: total = saleCosts.total + mortgageCosts.total;
+	$: advance = $house.totalPrice - $mortgage.total;
+	$: total = saleCosts.total + advance + mortgageCosts.total;
 </script>
 
 <Row>
@@ -22,6 +24,10 @@
 				<tr>
 					<td>Costi legati al mutuo</td>
 					<td>{toPrettyEuro(mortgageCosts.total)}</td>
+				</tr>
+				<tr>
+					<td>Anticipo per la casa</td>
+					<td>{toPrettyEuro(advance)}</td>
 				</tr>
 			</tbody>
 			<tfoot class="fw-bold">

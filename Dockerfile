@@ -1,4 +1,4 @@
-FROM node:16.13-alpine
+FROM node:18.16-alpine
 
 WORKDIR /usr/src/app
 
@@ -8,6 +8,7 @@ RUN npm ci
 
 COPY ./src ./src
 COPY ./static ./static
+COPY ./vite.config.js ./
 COPY ./svelte.config.js ./
 COPY ./tsconfig.json ./
 

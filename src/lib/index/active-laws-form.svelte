@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { activeLaws } from '$lib/stores/active-laws';
 
-	import { Col, FormGroup, Input, Label } from 'sveltestrap';
+	import { FormGroup, Input } from 'sveltestrap';
 </script>
 
 <FormGroup>

@@ -619,7 +619,7 @@ function generatePDF(
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function get({ url: { searchParams } }: { url: { searchParams: URLSearchParams } }) {
+export async function GET({ url: { searchParams } }: { url: { searchParams: URLSearchParams } }) {
 	const user: User = userDefaultValue;
 	const mortgage: Mortgage = mortgageDefaultValue;
 	const house: House = houseDefaultValue;
@@ -639,12 +639,11 @@ export async function get({ url: { searchParams } }: { url: { searchParams: URLS
 
 	const pdf = await generatePDF(user, mortgage, house, activeLaws);
 
-	return {
-		body: pdf['data'],
+	return new Response(pdf['data'], {
 		headers: {
 			'Content-size': pdf['size'],
 			'Content-Type': 'application/pdf'
 			// 'Content-disposition': 'attachment;filename=mutuo.pdf'
 		}
-	};
+	});
 }

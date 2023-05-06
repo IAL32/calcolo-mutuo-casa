@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { PeriodType } from '$lib/enums';
 import { fromURLSearchParamsToConfiguration, populateFromConfiguration } from '$lib/helpers';
 import type { Mortgage } from '$lib/types';

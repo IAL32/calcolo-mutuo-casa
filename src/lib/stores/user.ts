@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { fromURLSearchParamsToConfiguration, populateFromConfiguration } from '$lib/helpers';
 import type { User } from '$lib/types';
 import { writable } from 'svelte/store';

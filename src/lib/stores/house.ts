@@ -1,4 +1,4 @@
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { PurposeType, SellerType } from '$lib/enums';
 import { fromURLSearchParamsToConfiguration, populateFromConfiguration } from '$lib/helpers';
 import type { House } from '$lib/types';

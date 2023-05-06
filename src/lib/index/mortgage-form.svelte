@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { PeriodType } from '$lib/enums';
-import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
+	import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
@@ -9,16 +9,16 @@ import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
 
 	$: mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
 
-	function calculateMortgagePercent(mortgageTotal, houseTotalPrice) {
+	function calculateMortgagePercent(mortgageTotal: number, houseTotalPrice: number) {
 		return parseFloat(((mortgageTotal / houseTotalPrice) * 100).toFixed(2));
 	}
 
-	function handleMortgageTotalChange(e) {
+	function handleMortgageTotalChange(e: any) {
 		$mortgage.total = e.target.value;
 		mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
 	}
 
-	function handleMortgagePercentChange(e) {
+	function handleMortgagePercentChange(e: any) {
 		mortgagePercent = e.target.value;
 		$mortgage.total = parseFloat(
 			($house.totalPrice * (Math.min(mortgagePercent, 100) / 100)).toFixed(2)

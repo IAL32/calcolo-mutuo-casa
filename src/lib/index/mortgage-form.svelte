@@ -9,6 +9,8 @@
 
 	$: mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
 
+	$: mortgageDownPayment = $house.totalPrice - $mortgage.total;
+
 	function calculateMortgagePercent(mortgageTotal: number, houseTotalPrice: number) {
 		return parseFloat(((mortgageTotal / houseTotalPrice) * 100).toFixed(2));
 	}
@@ -16,6 +18,7 @@
 	function handleMortgageTotalChange(e: any) {
 		$mortgage.total = e.target.value;
 		mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
+		mortgageDownPayment = $house.totalPrice - $mortgage.total;
 	}
 
 	function handleMortgagePercentChange(e: any) {
@@ -23,6 +26,12 @@
 		$mortgage.total = parseFloat(
 			($house.totalPrice * (Math.min(mortgagePercent, 100) / 100)).toFixed(2)
 		);
+	}
+
+	function handleMortgageDownPaymentChange(e: any) {
+		mortgageDownPayment = e.target.value;
+		$mortgage.total = $house.totalPrice - mortgageDownPayment;
+		mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
 	}
 </script>
 
@@ -49,8 +58,8 @@
 	</Col>
 	<Col>
 		<FormGroup row>
-			<Label for="mortgage-percent" sm="2">oppure</Label>
-			<Col sm="10">
+			<Label for="mortgage-percent" sm="4">percentuale</Label>
+			<Col sm="8">
 				<InputGroup>
 					<InputGroupText>&percnt;</InputGroupText>
 					<Input
@@ -61,6 +70,22 @@
 						step={1}
 						min={0}
 						max={100}
+						placeholder="Percentuale del mutuo" />
+				</InputGroup>
+			</Col>
+		</FormGroup>
+		<FormGroup row>
+			<Label for="mortgage-percent" sm="4">anticipo</Label>
+			<Col sm="8">
+				<InputGroup>
+					<InputGroupText>&euro;</InputGroupText>
+					<Input
+						name="mortgage-downpayment"
+						type="number"
+						on:input={handleMortgageDownPaymentChange}
+						value={mortgageDownPayment}
+						step={1000}
+						min={0}
 						placeholder="Percentuale del mutuo" />
 				</InputGroup>
 			</Col>

@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY ./src ./src
 COPY ./static ./static
-COPY ./vite.config.js ./
+COPY ./vite.config.ts ./
 COPY ./svelte.config.js ./
 COPY ./tsconfig.json ./
 

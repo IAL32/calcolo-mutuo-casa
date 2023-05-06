@@ -59,6 +59,17 @@
 	</Col>
 </FormGroup>
 <FormGroup row>
+	<Label for="house-seller" sm="2">Agenzia Immobiliare</Label>
+	<Col sm="10">
+		<Input
+			name="use-realtor"
+			type="checkbox"
+			bind:checked={$house.useRealtor}
+			valid
+			feedback="Stai acquistando la casa attraverso un'agenzia immobiliare?" />
+	</Col>
+</FormGroup>
+<FormGroup row>
 	<Label for="house-purpose" sm="2">Destinazione dell'immobile</Label>
 	<Col sm="10">
 		<Input
@@ -81,7 +92,12 @@
 	<Col sm="10">
 		<InputGroup>
 			<InputGroupText>&euro;</InputGroupText>
-			<Input name="house-yield" type="number" bind:value={$house.yield} valid={$house.yield > 0} min={0} />
+			<Input
+				name="house-yield"
+				type="number"
+				bind:value={$house.yield}
+				valid={$house.yield > 0}
+				min={0} />
 			<FormText color="muted">
 				Il valore attribuito a tutti gli immobili in grado di produrre o generare reddito. Puoi
 				trovare la rendita catastale dell'immobile presso <a

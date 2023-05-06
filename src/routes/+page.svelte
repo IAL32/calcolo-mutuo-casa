@@ -13,7 +13,7 @@
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
 	import { activeLaws } from '$lib/stores/active-laws';
-	import { calculateMortgage } from '$lib/finance';
+	import { calculateMortgage, calculateMortgageTotal } from '$lib/finance';
 
 	$: currentConfiguration =
 		'?' + generateCurrentConfigurationURLParams($user, $house, $mortgage, $activeLaws);
@@ -55,7 +55,11 @@
 				<small>(vedi piano di ammortamento)</small>
 			</a>
 		</h3>
-		<p class="text-muted">Stima: {toPrettyEuro(calculateMortgage($mortgage))} /mese</p>
+		<p class="text-muted">
+			Stima: {toPrettyEuro(calculateMortgage($mortgage))}/mese, interessi totali: {toPrettyEuro(
+				calculateMortgageTotal($mortgage) - $mortgage.total
+			)}
+		</p>
 
 		<MortgageForm />
 	</Col>

@@ -18,6 +18,7 @@ export interface House {
 	totalSize: number;
 	seller: SellerType;
 	purpose: PurposeType;
+	useRealtor: boolean;
 	yield: number; // rendita catastale
 }
 

@@ -85,6 +85,11 @@ export const calculateMortgage = (mortgageData: Mortgage): number => {
 	);
 };
 
+export const calculateMortgageTotal = (mortgageData: Mortgage): number => {
+	const numberOfPeriods: number = mortgageData.period === PeriodType.MONTHS ? 1 : 12;
+	return calculateMortgage(mortgageData) * mortgageData.time * numberOfPeriods;
+};
+
 export const calculate_principal_paid_amount = (
 	mortgageData: Mortgage,
 	interestPeriod: number
@@ -120,7 +125,9 @@ export const calculateMortgagePlan = (mortgageData: Mortgage): MortgagePlan[] =>
 	});
 };
 
-export const calculate_realtor_cost = (houseValue: number): number => {
+export const calculate_realtor_cost = (useRealtor: boolean, houseValue: number): number => {
+	if (!useRealtor) return 0;
+
 	if (houseValue <= REALTOR_FLAT_RATE_LIMIT) {
 		return REALTOR_FLAT_RATE;
 	}
@@ -164,10 +171,7 @@ export const calculate_mortgage_tax = (activeLaws: ActiveLaws, seller: SellerTyp
 	return seller === SellerType.PRIVATE ? MORTGAGE_TAX_PRIVATE : MORTGAGE_TAX_COMPANY;
 };
 
-export const calculate_land_registry_tax = (
-	activeLaws: ActiveLaws,
-	seller: SellerType
-): number => {
+export const calculate_land_registry_tax = (activeLaws: ActiveLaws, seller: SellerType): number => {
 	if (activeLaws.dl_73_2021) {
 		return 0;
 	}
@@ -205,12 +209,9 @@ export const calculate_mortgage_alternate_tax = (
 		: houseValue * ALTERNATE_TAX_SECOND_HOUSE;
 };
 
-export const calculateHouseSaleCosts = (
-	activeLaws: ActiveLaws,
-	house: House
-): HouseSaleCosts => {
+export const calculateHouseSaleCosts = (activeLaws: ActiveLaws, house: House): HouseSaleCosts => {
 	const houseSaleCosts: HouseSaleCosts = {
-		realtor: calculate_realtor_cost(house.totalPrice),
+		realtor: calculate_realtor_cost(house.useRealtor, house.totalPrice),
 		registry: calculate_registry_cost(
 			activeLaws,
 			house.totalPrice,

@@ -3,7 +3,7 @@
 	import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
-	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
+	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from '@sveltestrap/sveltestrap';
 
 	$: mortgageTotalIsValid = $mortgage.total >= 2 && $house.totalPrice >= $mortgage.total;
 

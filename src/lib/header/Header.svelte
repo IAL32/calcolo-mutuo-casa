@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { NavbarBrand, Nav, NavItem, NavLink, Container } from 'sveltestrap';
+	import { NavbarBrand, Nav, NavItem, NavLink, Container } from '@sveltestrap/sveltestrap';
 	import { page } from '$app/stores';
 	import { generateCurrentConfigurationURLParams } from '$lib/helpers';
 	import { user } from '$lib/stores/user';

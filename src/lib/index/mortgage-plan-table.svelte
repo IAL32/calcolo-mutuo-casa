@@ -2,7 +2,7 @@
 	import { calculateMortgagePlan } from '$lib/finance';
 	import { toPrettyEuro } from '$lib/helpers';
 	import { mortgage } from '$lib/stores/mortgage';
-	import { Table } from 'sveltestrap';
+	import { Table } from '@sveltestrap/sveltestrap';
 </script>
 
 	<Table hover>

@@ -3,7 +3,7 @@
 	import { PurposeTypeHelper, SellerTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 
-	import { Col, FormGroup, FormText, Input, InputGroup, InputGroupText, Label } from 'sveltestrap';
+	import { Col, FormGroup, FormText, Input, InputGroup, InputGroupText, Label } from '@sveltestrap/sveltestrap';
 
 	$: houseTotalPriceIsValid = $house.totalPrice >= 2;
 	$: houseTotalSizeIsValid = $house.totalSize >= 1;

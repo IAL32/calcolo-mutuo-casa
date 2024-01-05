@@ -4,7 +4,7 @@
 	import { activeLaws } from '$lib/stores/active-laws';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
-	import { Col, Row, Table } from 'sveltestrap';
+	import { Col, Row, Table } from '@sveltestrap/sveltestrap';
 
 	$: saleCosts = calculateHouseSaleCosts($activeLaws, $house);
 	$: mortgageCosts = calculateMortgageCosts($activeLaws, $house.totalPrice, $house.purpose);

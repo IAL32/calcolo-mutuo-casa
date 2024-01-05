@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, ButtonGroup, ButtonToolbar, Col, Row } from 'sveltestrap';
+	import { Button, ButtonGroup, ButtonToolbar, Col, Row } from '@sveltestrap/sveltestrap';
 
 	import HouseForm from '$lib/index/house-form.svelte';
 	import MortgageForm from '$lib/index/mortgage-form.svelte';

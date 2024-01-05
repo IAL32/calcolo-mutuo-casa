@@ -1,7 +1,7 @@
 <script lang="ts">
 import { user } from '$lib/stores/user';
 
-	import { Col, FormGroup, Input, Label } from 'sveltestrap';
+	import { Col, FormGroup, Input, Label } from '@sveltestrap/sveltestrap';
 	$: ageIsValid = $user.age >= 18;
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
-	import { Container } from 'sveltestrap';
+	import { Container } from '@sveltestrap/sveltestrap';
 	import '../app.css';
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, ButtonGroup, ButtonToolbar, Col, Row } from 'sveltestrap';
+	import { Col, Row } from '@sveltestrap/sveltestrap';
 
 	import HouseForm from '$lib/index/house-form.svelte';
 	import MortgageForm from '$lib/index/mortgage-form.svelte';
@@ -8,40 +8,19 @@
 	import MortgageCostsTable from '$lib/index/mortgage-costs-table.svelte';
 	import ActiveLawsForm from '$lib/index/active-laws-form.svelte';
 	import TotalCostsTable from '$lib/index/total-costs-table.svelte';
-	import { generateCurrentConfigurationURLParams, toPrettyEuro } from '$lib/helpers';
-	import { user } from '$lib/stores/user';
-	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
-	import { activeLaws } from '$lib/stores/active-laws';
 	import { calculateMortgage, calculateMortgageTotal } from '$lib/finance';
-
-	$: currentConfiguration =
-		'?' + generateCurrentConfigurationURLParams($user, $house, $mortgage, $activeLaws);
+	import MortgagePlanTable from '$lib/index/mortgage-plan-table.svelte';
+	import { toPrettyEuro } from '$lib/helpers';
 </script>
 
 <svelte:head>
 	<title>Calcolo Rata Mutuo</title>
 </svelte:head>
 
-<div
-	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1>Calcolo Mutuo</h1>
-	<ButtonToolbar class="mb-2 mb-md-0">
-		<ButtonGroup class="me-2">
-			<Button size="sm" outline color="secondary" href={'/' + currentConfiguration}>
-				Condividi
-			</Button>
-			<Button
-				size="sm"
-				outline
-				color="secondary"
-				rel="external"
-				href={'/generate' + currentConfiguration}>
-				Salva come PDF
-			</Button>
-		</ButtonGroup>
-	</ButtonToolbar>
-</div>
+<h1>Calcolo Mutuo</h1>
+
+<hr />
 
 <Row>
 	<Col sm="12" lg="6">
@@ -50,11 +29,7 @@
 		<HouseForm />
 	</Col>
 	<Col sm="12" lg="6">
-		<h3>
-			Mutuo - <a href={'/piano-di-ammortamento' + currentConfiguration}>
-				<small>(vedi piano di ammortamento)</small>
-			</a>
-		</h3>
+		<h3>Mutuo</h3>
 		<p class="text-muted">
 			Stima: {toPrettyEuro(calculateMortgage($mortgage))}/mese, interessi totali: {toPrettyEuro(
 				calculateMortgageTotal($mortgage) - $mortgage.total
@@ -85,3 +60,20 @@
 <h2>Costi totali</h2>
 
 <TotalCostsTable />
+
+<hr />
+
+<h2>Piano di Ammortamento</h2>
+
+<MortgagePlanTable />
+
+<!-- Footer with some margins -->
+
+<Row class="m-5">
+	<Col class="text-center">
+		Ciao! Questo sito è stato originariamente sviluppato da <a href="https://adct.it" rel="external"
+			>Adrian Castro</a
+		>, ed il codice sorgente può essere visionato su
+		<a href="https://github.com/IAL32/calcolo-mutuo-casa" rel="external">GitHub</a>.
+	</Col>
+</Row>

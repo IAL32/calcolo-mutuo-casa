@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { calculateMortgageCosts } from '$lib/finance';
-	import { Table } from 'sveltestrap';
+	import { Table } from '@sveltestrap/sveltestrap';
 	import { house } from '$lib/stores/house';
 	import { toPrettyEuro } from '$lib/helpers';
 	import { activeLaws } from '$lib/stores/active-laws';

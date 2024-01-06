@@ -3,7 +3,7 @@
 	import { toPrettyEuro } from '$lib/helpers';
 	import { activeLaws } from '$lib/stores/active-laws';
 	import { house } from '$lib/stores/house';
-	import { Table } from 'sveltestrap';
+	import { Table } from '@sveltestrap/sveltestrap';
 
 	$: saleCosts = calculateHouseSaleCosts($activeLaws, $house);
 </script>

@@ -3,7 +3,7 @@
 	import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
-	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
+	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from '@sveltestrap/sveltestrap';
 
 	$: mortgageTotalIsValid = $mortgage.total >= 2 && $house.totalPrice >= $mortgage.total;
 
@@ -38,7 +38,7 @@
 <Row>
 	<Col>
 		<FormGroup row>
-			<Label for="mortgage-total" sm="2">Valore</Label>
+			<Label for="mortgage-total">Valore</Label>
 			<Col sm="10">
 				<InputGroup>
 					<InputGroupText>&euro;</InputGroupText>
@@ -58,7 +58,7 @@
 	</Col>
 	<Col>
 		<FormGroup row>
-			<Label for="mortgage-percent" sm="4">percentuale</Label>
+			<Label for="mortgage-percent">percentuale</Label>
 			<Col sm="8">
 				<InputGroup>
 					<InputGroupText>&percnt;</InputGroupText>
@@ -75,7 +75,7 @@
 			</Col>
 		</FormGroup>
 		<FormGroup row>
-			<Label for="mortgage-percent" sm="4">anticipo</Label>
+			<Label for="mortgage-percent">anticipo</Label>
 			<Col sm="8">
 				<InputGroup>
 					<InputGroupText>&euro;</InputGroupText>
@@ -93,7 +93,7 @@
 	</Col>
 </Row>
 <FormGroup row>
-	<Label for="mortgage-period" sm="2">Tempo</Label>
+	<Label for="mortgage-period">Tempo</Label>
 	<Col sm="5">
 		<Input name="mortgage-period" type="select" bind:value={$mortgage.period}>
 			<option value={PeriodType.MONTHS}>{PeriodTypeHelper.toString(PeriodType.MONTHS)}</option>
@@ -111,7 +111,7 @@
 </FormGroup>
 
 <FormGroup row>
-	<Label for="mortgage-taeg" sm="2">TAEG</Label>
+	<Label for="mortgage-taeg">TAEG</Label>
 	<Col sm="10">
 		<InputGroup>
 			<InputGroupText>&percnt;</InputGroupText>

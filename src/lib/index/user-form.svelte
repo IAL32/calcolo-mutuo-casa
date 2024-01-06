@@ -1,12 +1,12 @@
 <script lang="ts">
-import { user } from '$lib/stores/user';
+	import { user } from '$lib/stores/user';
 
-	import { Col, FormGroup, Input, Label } from 'sveltestrap';
+	import { Col, FormGroup, Input, Label } from '@sveltestrap/sveltestrap';
 	$: ageIsValid = $user.age >= 18;
 </script>
 
 <FormGroup row>
-	<Label for="user-age" sm="2">Età acquirente</Label>
+	<Label for="user-age">Età acquirente</Label>
 	<Col sm="10">
 		<Input
 			name="user-age"

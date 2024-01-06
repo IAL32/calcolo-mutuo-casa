@@ -3,14 +3,14 @@
 	import { PurposeTypeHelper, SellerTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 
-	import { Col, FormGroup, FormText, Input, InputGroup, InputGroupText, Label } from 'sveltestrap';
+	import { Col, FormGroup, FormText, Input, InputGroup, InputGroupText, Label } from '@sveltestrap/sveltestrap';
 
 	$: houseTotalPriceIsValid = $house.totalPrice >= 2;
 	$: houseTotalSizeIsValid = $house.totalSize >= 1;
 </script>
 
 <FormGroup row>
-	<Label for="house-totalprice" sm="2">Prezzo di vendita</Label>
+	<Label for="house-totalprice">Prezzo di vendita</Label>
 	<Col sm="10">
 		<InputGroup>
 			<InputGroupText>&euro;</InputGroupText>
@@ -26,7 +26,7 @@
 	</Col>
 </FormGroup>
 <FormGroup row>
-	<Label for="house-totalsize" sm="2">Dimensione</Label>
+	<Label for="house-totalsize">Dimensione</Label>
 	<Col sm="10">
 		<InputGroup>
 			<Input
@@ -41,7 +41,7 @@
 	</Col>
 </FormGroup>
 <FormGroup row>
-	<Label for="house-seller" sm="2">Venditore</Label>
+	<Label for="house-seller">Venditore</Label>
 	<Col sm="10">
 		<Input
 			name="house-seller"
@@ -59,7 +59,7 @@
 	</Col>
 </FormGroup>
 <FormGroup row>
-	<Label for="house-seller" sm="2">Agenzia Immobiliare</Label>
+	<Label for="house-seller">Agenzia Immobiliare</Label>
 	<Col sm="10">
 		<Input
 			name="use-realtor"
@@ -70,7 +70,7 @@
 	</Col>
 </FormGroup>
 <FormGroup row>
-	<Label for="house-purpose" sm="2">Destinazione dell'immobile</Label>
+	<Label for="house-purpose">Destinazione dell'immobile</Label>
 	<Col sm="10">
 		<Input
 			name="house-purpose"
@@ -88,7 +88,7 @@
 	</Col>
 </FormGroup>
 <FormGroup row>
-	<Label for="house-yield" sm="2">Rendita Catastale</Label>
+	<Label for="house-yield">Rendita Catastale</Label>
 	<Col sm="10">
 		<InputGroup>
 			<InputGroupText>&euro;</InputGroupText>
@@ -98,7 +98,7 @@
 				bind:value={$house.yield}
 				valid={$house.yield > 0}
 				min={0} />
-			<FormText color="muted">
+			<FormText>
 				Il valore attribuito a tutti gli immobili in grado di produrre o generare reddito. Puoi
 				trovare la rendita catastale dell'immobile presso <a
 					href="https://sister.agenziaentrate.gov.it/CitizenVisure/">l'Agenzia delle Entrate</a>

@@ -5,7 +5,8 @@
 	import { Table } from '@sveltestrap/sveltestrap';
 </script>
 
-	<Table hover>
+<div>
+	<Table hover class="mortgage-table">
 		<thead class="position-sticky bg-light">
 			<tr>
 				<th style="width: 10%">Periodo</th>
@@ -27,10 +28,15 @@
 			{/each}
 		</tbody>
 	</Table>
+</div>
 
 <style>
 	thead {
 		top: 0;
 		z-index: 1;
+	}
+	div {
+		max-height: clamp(50em, 10vh, 250px);
+		overflow: auto;
 	}
 </style>

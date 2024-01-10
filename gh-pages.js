@@ -9,7 +9,8 @@ publish(
       name: 'IAL32', // update to use your name
       email: '562969+IAL32@users.noreply.github.com' // Update to use your email
     },
-    dotfiles: true
+    dotfiles: true,
+    cname: 'mutuo.adct.it'
   },
   () => {
     console.log('Deploy Complete!');

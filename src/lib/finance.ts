@@ -156,7 +156,8 @@ export const calculate_registry_cost = (
 		return landRegistryValue * 0.02;
 	}
 
-	return houseValue * 0.09;
+    let totalHouseYield = houseYield * 126;
+	return totalHouseYield * 0.09;
 };
 
 export const calculate_house_land_registry_value = (houseYield: number): number => {

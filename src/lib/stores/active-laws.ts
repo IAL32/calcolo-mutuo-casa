@@ -3,7 +3,7 @@ import type { ActiveLaws } from '$lib/types';
 import { writable } from 'svelte/store';
 
 export const defaultValue: ActiveLaws = {
-	dl_73_2021: true
+	dl_73_2021: false // the DL is not active anymore
 };
 
 let initialValue: ActiveLaws = defaultValue;

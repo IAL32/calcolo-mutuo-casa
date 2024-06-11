@@ -8,9 +8,9 @@ import type {
 	MortgagePlan
 } from './types';
 
-const REALTOR_FLAT_RATE_LIMIT = 1.5e5; // 150.000
-const REALTOR_FLAT_RATE = 6000;
-const REALTOR_RATE = 0.03; // 3%
+// Constants
+
+const VAT = 22;
 
 const HOUSE_YIELD_CONSTANT = 115.5;
 const REGISTRY_TAX_COMPANY = 200;
@@ -125,14 +125,16 @@ export const calculateMortgagePlan = (mortgageData: Mortgage): MortgagePlan[] =>
 	});
 };
 
-export const calculate_realtor_cost = (useRealtor: boolean, houseValue: number): number => {
+export const calculate_realtor_cost = (
+	useRealtor: boolean,
+	realtorFee: number,
+	houseValue: number
+): number => {
 	if (!useRealtor) return 0;
-
-	if (houseValue <= REALTOR_FLAT_RATE_LIMIT) {
-		return REALTOR_FLAT_RATE;
-	}
-
-	return REALTOR_RATE * houseValue;
+	const flatPrice = (realtorFee / 100) * houseValue;
+	const realtorVAT = flatPrice * (VAT / 100);
+	const netPrice = flatPrice + realtorVAT;
+	return netPrice;
 };
 
 export const calculate_registry_cost = (
@@ -156,7 +158,7 @@ export const calculate_registry_cost = (
 		return landRegistryValue * 0.02;
 	}
 
-    let totalHouseYield = houseYield * 126;
+	let totalHouseYield = houseYield * 126;
 	return totalHouseYield * 0.09;
 };
 
@@ -212,7 +214,7 @@ export const calculate_mortgage_alternate_tax = (
 
 export const calculateHouseSaleCosts = (activeLaws: ActiveLaws, house: House): HouseSaleCosts => {
 	const houseSaleCosts: HouseSaleCosts = {
-		realtor: calculate_realtor_cost(house.useRealtor, house.totalPrice),
+		realtor: calculate_realtor_cost(house.useRealtor, house.realtorFee, house.totalPrice),
 		registry: calculate_registry_cost(
 			activeLaws,
 			house.totalPrice,

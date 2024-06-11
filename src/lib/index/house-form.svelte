@@ -3,7 +3,15 @@
 	import { PurposeTypeHelper, SellerTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 
-	import { Col, FormGroup, FormText, Input, InputGroup, InputGroupText, Label } from '@sveltestrap/sveltestrap';
+	import {
+		Col,
+		FormGroup,
+		FormText,
+		Input,
+		InputGroup,
+		InputGroupText,
+		Label
+	} from '@sveltestrap/sveltestrap';
 
 	$: houseTotalPriceIsValid = $house.totalPrice >= 2;
 	$: houseTotalSizeIsValid = $house.totalSize >= 1;
@@ -69,6 +77,26 @@
 			feedback="Stai acquistando la casa attraverso un'agenzia immobiliare?" />
 	</Col>
 </FormGroup>
+{#if $house.useRealtor}
+	<FormGroup row>
+		<Label for="house-realtor">Percentuale Onorario Agenzia Immobiliare</Label>
+		<Col sm="10">
+			<InputGroup>
+				<InputGroupText>%</InputGroupText>
+				<Input
+					name="house-realtor"
+					type="number"
+					bind:value={$house.realtorFee}
+					valid={$house.realtorFee > 0}
+					min={0} />
+				<FormText>
+					La percentuale dell'importo totale che l'agenzia immobiliare richiede come compenso per
+					aver intermediato la compravendita. A questo si aggiunge l'IVA.
+				</FormText>
+			</InputGroup>
+		</Col>
+	</FormGroup>
+{/if}
 <FormGroup row>
 	<Label for="house-purpose">Destinazione dell'immobile</Label>
 	<Col sm="10">

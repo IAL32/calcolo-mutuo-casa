@@ -12,10 +12,10 @@
 	<tbody>
 		<tr>
 			<td>
-				Onorario Agenzia Immobiliare (<abbr title="Stima">*</abbr>)
+				Onorario Agenzia Immobiliare
 				<p class="text-muted">
 					Ammontare dovuto all'agenzia immobiliare che intermedia l'acquisto dell'immobile. Può
-					variare dal 3% al 6%, ma può anche avere un valore fisso.
+					variare dal 3% al 6%, ma può anche avere un valore fisso. A questo si aggiunge l'IVA.
 				</p>
 			</td>
 			<td>{toPrettyEuro(saleCosts.realtor)}</td>

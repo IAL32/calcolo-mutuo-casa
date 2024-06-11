@@ -19,6 +19,7 @@ export interface House {
 	seller: SellerType;
 	purpose: PurposeType;
 	useRealtor: boolean;
+    realtorFee: number;
 	yield: number; // rendita catastale
 }
 

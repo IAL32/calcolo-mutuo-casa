@@ -1,4 +1,3 @@
-import { browser } from '$app/environment';
 import { PurposeType, SellerType } from '$lib/enums';
 import type { House } from '$lib/types';
 import { writable } from 'svelte/store';
@@ -10,14 +9,9 @@ export const defaultValue: House = {
     purpose: PurposeType.FIRST_HOUSE,
     yield: 350,
     useRealtor: true,
+    realtorFee: 3,
 };
 
 let initialValue: House = defaultValue;
 
 export const house = writable<House>(initialValue);
-
-house.subscribe((value) => {
-    if (browser) {
-        window.localStorage.setItem('house', JSON.stringify(value));
-    }
-});

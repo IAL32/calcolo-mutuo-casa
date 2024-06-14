@@ -4,7 +4,7 @@ import type { Mortgage } from '$lib/types';
 import { writable } from 'svelte/store';
 
 export const defaultValue: Mortgage = {
-    total: 8e4,
+    total: 136_000,
     period: PeriodType.YEARS,
     time: 30,
     taeg: 3.38

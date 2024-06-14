@@ -19,7 +19,9 @@ export interface House {
 	seller: SellerType;
 	purpose: PurposeType;
 	useRealtor: boolean;
-    realtorFee: number;
+	realtorFee: number;
+	useBroker: boolean;
+	brokerFee: number;
 	yield: number; // rendita catastale
 }
 
@@ -49,6 +51,7 @@ export interface HouseSaleCosts {
 }
 
 export interface MortgageCosts {
+	broker: number;
 	openingMortgage: number; // istruttoria pratica di mutuo
 	houseExamination: number; // perizia dell'immobile
 	alternateTax: number; // imposta sostitutiva

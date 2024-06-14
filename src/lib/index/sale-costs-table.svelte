@@ -11,7 +11,7 @@
 <Table responsive>
 	<tbody>
 		<tr>
-			<td>
+			<td rowspan="2">
 				Onorario Agenzia Immobiliare
 				<p class="text-muted">
 					Ammontare dovuto all'agenzia immobiliare che intermedia l'acquisto dell'immobile. Può
@@ -20,6 +20,9 @@
 			</td>
 			<td>{toPrettyEuro(saleCosts.realtor)}</td>
 		</tr>
+        <tr>
+            <td><span class="text-muted">Incluso di IVA</span></td>
+        </tr>
 		<tr>
 			<td>
 				Imposta di Registro

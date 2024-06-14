@@ -7,7 +7,7 @@ export const defaultValue: Mortgage = {
     total: 8e4,
     period: PeriodType.YEARS,
     time: 30,
-    taeg: 1.15
+    taeg: 3.38
 };
 
 let initialValue: Mortgage = defaultValue;

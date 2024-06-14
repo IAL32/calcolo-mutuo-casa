@@ -7,7 +7,7 @@
 	import { Col, Row, Table } from '@sveltestrap/sveltestrap';
 
 	$: saleCosts = calculateHouseSaleCosts($activeLaws, $house);
-	$: mortgageCosts = calculateMortgageCosts($activeLaws, $house.totalPrice, $house.purpose);
+	$: mortgageCosts = calculateMortgageCosts($activeLaws, $house, $mortgage);
 
 	$: advance = $house.totalPrice - $mortgage.total;
 	$: total = saleCosts.total + advance + mortgageCosts.total;
@@ -28,6 +28,15 @@
 				<tr>
 					<td>Anticipo per la casa</td>
 					<td>{toPrettyEuro(advance)}</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<p>
+							Il totale è calcolato sommando i costi legati alla compravendita, i costi legati al
+							mutuo e l'anticipo per la casa. Si riferisce ad una stima dei costi totali che dovrai
+							affrontare per acquistare la casa, comprensivi di tasse e spese accessorie.
+						</p>
+					</td>
 				</tr>
 			</tbody>
 			<tfoot class="fw-bold">

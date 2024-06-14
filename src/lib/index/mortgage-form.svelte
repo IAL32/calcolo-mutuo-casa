@@ -3,7 +3,16 @@
 	import { PeriodTypeHelper } from '$lib/helpers/EnumHelper';
 	import { house } from '$lib/stores/house';
 	import { mortgage } from '$lib/stores/mortgage';
-	import { Col, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from '@sveltestrap/sveltestrap';
+	import {
+		Col,
+		FormGroup,
+		FormText,
+		Input,
+		InputGroup,
+		InputGroupText,
+		Label,
+		Row
+	} from '@sveltestrap/sveltestrap';
 
 	$: mortgageTotalIsValid = $mortgage.total >= 2 && $house.totalPrice >= $mortgage.total;
 
@@ -32,6 +41,14 @@
 		mortgageDownPayment = e.target.value;
 		$mortgage.total = $house.totalPrice - mortgageDownPayment;
 		mortgagePercent = calculateMortgagePercent($mortgage.total, $house.totalPrice);
+	}
+
+	function handleMortgageTimeChange(e: any) {
+		if ($mortgage.period === PeriodType.YEARS) {
+			$mortgage.time = Math.min(e.target.value, 30);
+		} else {
+			$mortgage.time = Math.min(e.target.value, 360);
+		}
 	}
 </script>
 
@@ -105,7 +122,9 @@
 			name="mortgage-time"
 			type="number"
 			min={1}
+			max={$mortgage.period === PeriodType.YEARS ? 30 : 360}
 			bind:value={$mortgage.time}
+			on:input={handleMortgageTimeChange}
 			placeholder="Durata del mutuo" />
 	</Col>
 </FormGroup>
@@ -121,6 +140,14 @@
 				bind:value={$mortgage.taeg}
 				step={0.01}
 				placeholder="Inserisci il TAEG" />
+			<FormText>
+				Il Tasso Annuo Effettivo Globale (TAEG) è il tasso di interesse annuo che include tutti i
+				costi del mutuo, come gli interessi, le spese di istruttoria e le assicurazioni
+				obbligatorie. Consulta il sito <a
+					href="https://www.mutuionline.it/mutuo-migliore/miglior-mutuo.asp"
+					target="_blank">Mutuionline.it</a>
+				per trovare il TAEG più conveniente.
+			</FormText>
 		</InputGroup>
 	</Col>
 </FormGroup>

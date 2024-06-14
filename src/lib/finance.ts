@@ -137,6 +137,18 @@ export const calculate_realtor_cost = (
 	return netPrice;
 };
 
+export const calculate_broker_cost = (
+	useBroker: boolean,
+	brokerFee: number,
+	mortgageValue: number
+): number => {
+	if (!useBroker) return 0;
+	const flatPrice = (brokerFee / 100) * mortgageValue;
+	const brokerVAT = flatPrice * (VAT / 100);
+	const netPrice = flatPrice + brokerVAT;
+	return netPrice;
+};
+
 export const calculate_registry_cost = (
 	activeLaws: ActiveLaws,
 	houseValue: number,
@@ -243,14 +255,15 @@ export const calculateHouseSaleCosts = (activeLaws: ActiveLaws, house: House): H
 
 export const calculateMortgageCosts = (
 	activeLaws: ActiveLaws,
-	houseValue: number,
-	purpose: PurposeType
+	house: House,
+	mortgage: Mortgage
 ): MortgageCosts => {
 	const mortgageCosts: MortgageCosts = {
 		openingMortgage: OPENING_MORTGAGE_COST,
 		houseExamination: HOUSE_EXAMINATION_COST,
-		alternateTax: calculate_mortgage_alternate_tax(activeLaws, houseValue, purpose),
+		alternateTax: calculate_mortgage_alternate_tax(activeLaws, house.totalPrice, house.purpose),
 		notary: MORTGAGE_NOTARY_COST,
+		broker: calculate_broker_cost(house.useBroker, house.brokerFee, mortgage.total),
 
 		total: 0
 	};
@@ -259,7 +272,8 @@ export const calculateMortgageCosts = (
 		mortgageCosts.openingMortgage +
 		mortgageCosts.houseExamination +
 		mortgageCosts.alternateTax +
-		mortgageCosts.notary;
+		mortgageCosts.notary +
+		mortgageCosts.broker;
 
 	return mortgageCosts;
 };

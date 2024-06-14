@@ -2,14 +2,29 @@
 	import { calculateMortgageCosts } from '$lib/finance';
 	import { Table } from '@sveltestrap/sveltestrap';
 	import { house } from '$lib/stores/house';
+	import { mortgage } from '$lib/stores/mortgage';
 	import { toPrettyEuro } from '$lib/helpers';
 	import { activeLaws } from '$lib/stores/active-laws';
 
-	$: mortgageCosts = calculateMortgageCosts($activeLaws, $house.totalPrice, $house.purpose);
+	$: mortgageCosts = calculateMortgageCosts($activeLaws, $house, $mortgage);
 </script>
 
 <Table responsive>
 	<tbody>
+		<tr>
+			<td rowspan="2">
+				Onorario Broker Mutuo
+				<p class="text-muted">
+					Ammontare dovuto al broker che intermedia l'ottenimento del mutuo per l'acquisto
+                    dell'immobile. Può variare dal 1% al 2%, ma può anche avere un valore fisso. A questo si
+                    aggiunge l'IVA.
+				</p>
+			</td>
+			<td>{toPrettyEuro(mortgageCosts.broker)}</td>
+		</tr>
+        <tr>
+            <td><span class="text-muted">Incluso di IVA</span></td>
+        </tr>
 		<tr>
 			<td>
 				Istruttoria Pratica di Mutuo
@@ -40,9 +55,7 @@
 		<tr>
 			<td>
 				Onorari Notarili per Atto di Mutuo (<abbr title="Stima">*</abbr>)
-				<p class="text-muted">
-					Costo dovuto al notaio che effettua l'atto notarile del mutuo
-				</p>
+				<p class="text-muted">Costo dovuto al notaio che effettua l'atto notarile del mutuo</p>
 			</td>
 			<td>{toPrettyEuro(mortgageCosts.notary)}</td>
 		</tr>

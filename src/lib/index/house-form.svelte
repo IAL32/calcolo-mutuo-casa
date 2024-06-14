@@ -6,6 +6,7 @@
 	import {
 		Col,
 		FormGroup,
+		Row,
 		FormText,
 		Input,
 		InputGroup,
@@ -17,13 +18,13 @@
 	$: houseTotalSizeIsValid = $house.totalSize >= 1;
 </script>
 
-<FormGroup row>
-	<Label for="house-totalprice">Prezzo di vendita</Label>
-	<Col sm="10">
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-totalprice">Prezzo di vendita</Label>
+	<Col sm="6">
 		<InputGroup>
 			<InputGroupText>&euro;</InputGroupText>
 			<Input
-				name="house-totalprice"
+				id="house-totalprice"
 				type="number"
 				valid={houseTotalPriceIsValid}
 				invalid={!houseTotalPriceIsValid}
@@ -32,13 +33,13 @@
 				placeholder="Inserisci il prezzo totale della casa" />
 		</InputGroup>
 	</Col>
-</FormGroup>
-<FormGroup row>
-	<Label for="house-totalsize">Dimensione</Label>
-	<Col sm="10">
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-totalsize">Dimensione</Label>
+	<Col sm="6">
 		<InputGroup>
 			<Input
-				name="house-totalsize"
+				id="house-totalsize"
 				type="number"
 				valid={houseTotalSizeIsValid}
 				invalid={!houseTotalSizeIsValid}
@@ -47,12 +48,12 @@
 			<InputGroupText>m<sup>2</sup></InputGroupText>
 		</InputGroup>
 	</Col>
-</FormGroup>
-<FormGroup row>
-	<Label for="house-seller">Venditore</Label>
-	<Col sm="10">
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-seller">Venditore</Label>
+	<Col sm="6">
 		<Input
-			name="house-seller"
+			id="house-seller"
 			type="select"
 			bind:value={$house.seller}
 			valid
@@ -65,43 +66,72 @@
 			</option>
 		</Input>
 	</Col>
-</FormGroup>
-<FormGroup row>
-	<Label for="house-seller">Agenzia Immobiliare</Label>
-	<Col sm="10">
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-seller">Agenzia Immobiliare</Label>
+	<Col sm="6">
 		<Input
-			name="use-realtor"
+			id="use-realtor"
 			type="checkbox"
 			bind:checked={$house.useRealtor}
 			valid
 			feedback="Stai acquistando la casa attraverso un'agenzia immobiliare?" />
 	</Col>
-</FormGroup>
-{#if $house.useRealtor}
-	<FormGroup row>
-		<Label for="house-realtor">Percentuale Onorario Agenzia Immobiliare</Label>
-		<Col sm="10">
-			<InputGroup>
-				<InputGroupText>%</InputGroupText>
-				<Input
-					name="house-realtor"
-					type="number"
-					bind:value={$house.realtorFee}
-					valid={$house.realtorFee > 0}
-					min={0} />
-				<FormText>
-					La percentuale dell'importo totale che l'agenzia immobiliare richiede come compenso per
-					aver intermediato la compravendita. A questo si aggiunge l'IVA.
-				</FormText>
-			</InputGroup>
-		</Col>
-	</FormGroup>
-{/if}
-<FormGroup row>
-	<Label for="house-purpose">Destinazione dell'immobile</Label>
-	<Col sm="10">
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-realtor">Percentuale Onorario Agenzia Immobiliare</Label>
+	<Col sm="6">
+		<InputGroup>
+			<InputGroupText>%</InputGroupText>
+			<Input
+				id="house-realtor"
+				type="number"
+				bind:value={$house.realtorFee}
+				valid={$house.realtorFee > 0}
+				disabled={!$house.useRealtor}
+				min={0} />
+			<FormText>
+				La percentuale dell'importo totale che l'agenzia immobiliare richiede come compenso per aver
+				intermediato la compravendita. A questo si aggiunge l'IVA.
+			</FormText>
+		</InputGroup>
+	</Col>
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-seller">Broker</Label>
+	<Col sm="6">
 		<Input
-			name="house-purpose"
+			id="use-broker"
+			type="checkbox"
+			bind:checked={$house.useBroker}
+			valid
+			feedback="Stai acquistando la casa attraverso un broker per il mutuo?" />
+	</Col>
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-broker">Percentuale Onorario Broker</Label>
+	<Col sm="6">
+		<InputGroup>
+			<InputGroupText>%</InputGroupText>
+			<Input
+				id="house-broker"
+				type="number"
+				bind:value={$house.brokerFee}
+				valid={$house.brokerFee > 0}
+                disabled={!$house.useBroker}
+				min={0} />
+			<FormText>
+				La percentuale dell'importo totale che il broker richiede come compenso per aver
+				intermediato il mutuo. A questo si aggiunge l'IVA.
+			</FormText>
+		</InputGroup>
+	</Col>
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-purpose">Destinazione dell'immobile</Label>
+	<Col sm="6">
+		<Input
+			id="house-purpose"
 			type="select"
 			bind:value={$house.purpose}
 			valid
@@ -114,14 +144,14 @@
 			</option>
 		</Input>
 	</Col>
-</FormGroup>
-<FormGroup row>
-	<Label for="house-yield">Rendita Catastale</Label>
-	<Col sm="10">
+</Row>
+<Row class="mb-2">
+	<Label class="col-sm-4" for="house-yield">Rendita Catastale</Label>
+	<Col sm="6">
 		<InputGroup>
 			<InputGroupText>&euro;</InputGroupText>
 			<Input
-				name="house-yield"
+				id="house-yield"
 				type="number"
 				bind:value={$house.yield}
 				valid={$house.yield > 0}
@@ -133,4 +163,4 @@
 			</FormText>
 		</InputGroup>
 	</Col>
-</FormGroup>
+</Row>
